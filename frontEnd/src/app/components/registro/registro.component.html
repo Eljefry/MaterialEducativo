@@ -1,60 +1,62 @@
 <div class="container">
-  <section class="box">
+  <article class="box">
     <header>
       <h1 class="title">Registro de Usuario</h1>
     </header>
     <br>
     <form (ngSubmit)="Registro()" #registroForm="ngForm">
       <fieldset>
-        <div class="field">
+        <!-- Nombre -->
+        <section class="field" [ngClass]="{'is-danger': registroForm.submitted && !user.nombre}">
           <label class="label">Nombre</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Ingresa tu nombre" [(ngModel)]="user.nombre" name="nombre"
-              required>
-          </div>
-        </div>
+          <input class="input" type="text" placeholder="Ingresa tu nombre" [(ngModel)]="user.nombre" name="nombre" required>
+          <p *ngIf="registroForm.submitted && !user.nombre" class="help is-danger">
+            El nombre es obligatorio
+          </p>
+        </section>
 
-        <div class="field">
+        <!-- Email -->
+        <section class="field" [ngClass]="{'is-danger': registroForm.submitted && !user.email}">
           <label class="label">Email</label>
-          <div class="control">
-            <input class="input" type="email" placeholder="Ingresa tu email" [(ngModel)]="user.email" name="email"
-              required>
-          </div>
-        </div>
+          <input class="input" type="email" placeholder="Ingresa tu email" [(ngModel)]="user.email" name="email" required>
+          <p *ngIf="registroForm.submitted && !user.email" class="help is-danger">
+            El email es obligatorio
+          </p>
+        </section>
 
-        <div class="field">
+        <!-- Contraseña -->
+        <section class="field" [ngClass]="{'is-danger': registroForm.submitted && !user.contrasenia}">
           <label class="label">Contraseña</label>
-          <div class="control">
-            <input class="input" type="password" placeholder="Ingresa tu contraseña" [(ngModel)]="user.contrasenia"
-              name="contraseña" required>
-          </div>
-        </div>
+          <input class="input" type="password" placeholder="Ingresa tu contraseña" [(ngModel)]="user.contrasenia" name="contrasenia" required>
+          <p *ngIf="registroForm.submitted && !user.contrasenia" class="help is-danger">
+            La contraseña es obligatoria
+          </p>
+        </section>
 
-        <div class="field">
+        <!-- Certificado -->
+        <section class="field">
           <label class="label">Certificado Alumno Regular</label>
-          <div class="control">
-            <div class="file has-name">
-              <label class="file-label">
-                <input class="file-input" type="file" name="certificado" (change)="SelectFile($event)" required />
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fas fa-upload"></i>
-                  </span>
-                  <span class="file-label"> Seleccionar pdf… </span>
+          <div class="file has-name">
+            <label class="file-label">
+              <input class="file-input" type="file" name="certificado" (change)="SelectFile($event)" required>
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
                 </span>
-                <span class="file-name">{{ user.certificado?.name || 'Ningún archivo seleccionado' }}</span>
-              </label>
-            </div>
+                <span class="file-label">Seleccionar pdf…</span>
+              </span>
+              <span class="file-name">{{ user.certificado?.name || 'Ningún archivo seleccionado' }}</span>
+            </label>
           </div>
-        </div>
-        <br>
+        </section>
 
-        <div class="field">
+        <!-- Botón de Registro -->
+        <section class="field">
           <div class="boton-container">
-            <button class="button is-primary" type="submit" >Registrar</button>
+            <button class="button is-primary" type="submit">Registrar</button>
           </div>
-        </div>
+        </section>
       </fieldset>
     </form>
-  </section>
+  </article>
 </div>

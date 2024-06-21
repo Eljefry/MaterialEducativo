@@ -4,6 +4,19 @@ body {
   margin: 0;
 }
 
+.field.is-danger .input {
+  border-color: #ff3860;
+}
+
+.help.is-danger {
+  color: #ff3860;
+}
+
+.boton-container {
+  text-align: center;
+}
+
+
 .container {
   display: flex;
   justify-content: center;

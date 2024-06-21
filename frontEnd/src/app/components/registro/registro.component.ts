@@ -17,7 +17,6 @@ export class RegistroComponent implements OnInit {
     contrasenia: '',
     certificado: null as File | null //no entiendo muy bien esto, pero es la unica forma en que anda
   };
-
   constructor(
     private _Materialservice: ServiceService,
     private _alertService: AlertService) { }
@@ -32,15 +31,14 @@ export class RegistroComponent implements OnInit {
     if (file && file.type === 'application/pdf') {//verifica que sea un archivo PDF
       this.user.certificado = file;
     } else
-      this._alertService.error('Selecciona un archivo PDF y no haga perder tiempo');
-
+       this._alertService.error('Selecciona un archivo PDF');
   }
 
   Registro()//este metodo se ejecuta cuando se oprime el boton registrar
   {
     if (!this.user.certificado)// verifica si se cargo un archivo
     {
-      alert('Por favor, carga un archivo PDF');
+      this._alertService.error('Selecciona un archivo PDF');
       return;//detiene la ejecucion del metodo y no sigue con las siguientes lineas de codigo
     }
 
