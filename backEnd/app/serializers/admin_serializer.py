@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app.models import Departamento,Carrera,Materia
+from app.models import Departamento,Carrera,Materia,Categoria
 
 #ESTE SERIALIZADOR PARA LOS CRUDS DE DEPARTAMENTO,CARRERA Y MATERIA
 
@@ -18,4 +18,9 @@ class CarreraSerializer(serializers.ModelSerializer):
 class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materia
+        fields=['nombre']
+        
+class CategoriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categoria
         fields=['nombre']

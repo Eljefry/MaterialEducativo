@@ -61,6 +61,16 @@ class Materia(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=50, null=False)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True,null=True)
+
+    def __str__(self):
+        return self.nombre
+    
+
     
 class CarreraMateria(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.RESTRICT, null=False)
@@ -71,6 +81,7 @@ class Documentos(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     file = models.FileField(upload_to="documents", null=False, blank=False)
     materia = models.ForeignKey(Materia, on_delete=models.RESTRICT,related_name="Materia", null=False)
+    categoria= models.ForeignKey(Categoria, on_delete=models.RESTRICT,related_name="Categoria", null=False)
     owner = models.ForeignKey(
         Usuarios, on_delete=models.CASCADE, related_name="documents"
     )

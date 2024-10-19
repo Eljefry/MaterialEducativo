@@ -30,5 +30,8 @@ urlpatterns= [
     path('document/<int:pk>',GetDocument.as_view()),
     path('folder/<int:pk>',UserFolder.as_view()),
     path('departamentos', GetDepartamentos.as_view(),), 
+    path('carreras', GetCarreras.as_view(),), 
+    path('materias', GetMaterias.as_view(),), 
+    path('categorias', GetCategorias.as_view(),), 
     
     ]

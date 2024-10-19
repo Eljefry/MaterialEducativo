@@ -16,7 +16,7 @@ class GetMaterias(generics.ListAPIView):
      queryset=Materia.objects.all()
      serializer_class=MateriaSerializer
      
-# class GetCarreras(generics.ListAPIView):
-#      queryset=Carrera.objects.all()
-#      serializer_class=CarreraSerializer
+class GetCategorias(generics.ListAPIView):
+     queryset=Categoria.objects.all()
+     serializer_class=CategoriaSerializer
      
