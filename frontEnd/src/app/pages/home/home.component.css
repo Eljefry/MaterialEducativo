@@ -1,30 +1,29 @@
             .father-container {
               height: 100vh;
-              /* Hace que el contenedor ocupe toda la altura de la ventana */
+              /* hace que el contenedor ocupe toda la altura de la ventana */
               display: flex;
-              /* Alinea los hijos en una fila */
-              flex-direction: column;
-              /* Apila los hijos verticalmente */
+              /* alinea los hijos en una fila */
+              flex-direction: column
             }
 
-            .container-sidebar {
-              background-color: transparent;
-              width: 100%;
-            }
+.container-sidebar {
+  background-color: transparent;
+  width: 100%
+}
 
-            .container-navbar {
-              height: 80px;
-              width: 100%;
-              background-color: transparent;
-            }
+.container-navbar {
+  height: 80px;
+  width: 100%;
+  background-color: transparent;
+}
 
             .container-principal {
               background-color: #F1F3F4;
               display: flex;
             }
 
-            .container-table {
-              background-color: white;
-              border-radius: 20px;
-              height: 100%;
-            }
+.container-table {
+  background-color: white;
+  border-radius: 20px;
+  height: 100%;
+}

@@ -7,10 +7,18 @@ import { MaterialService } from 'src/app/services/service.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  Section:string='';
 
-  constructor(){}
+  constructor(private materialService: MaterialService) { }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+     //establecer una sección por defecto al cargar la página
+     this.Section='miUnidad';
+  }
 
+  //metodo para actualizar la sección seleccionada
+  selectChange(section: string) {
+      this.Section = section;
+    }
 
 }
