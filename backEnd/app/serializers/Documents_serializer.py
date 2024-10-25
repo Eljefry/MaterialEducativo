@@ -24,7 +24,7 @@ class updateState(serializers.ModelSerializer):
 class userDocuments(serializers.ModelSerializer):#este es un serialzidor generico, solo para recuper un doc para el usuario
     class Meta:
         model=Documentos
-        fields=["title", "created_at","file"]
+        fields=["title", "created_at","file","owner","updated_at"]
         
 class userDocumentsFavorito(serializers.ModelSerializer):#este es un serialzidor generico, solo para recuper un doc para el usuario
         owner_name = serializers.CharField(source='owner.username', read_only=True)    
