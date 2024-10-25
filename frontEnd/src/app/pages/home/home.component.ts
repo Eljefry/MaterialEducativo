@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialService } from 'src/app/services/service.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +7,14 @@ import { MaterialService } from 'src/app/services/service.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(){}
+  filter: any;
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  onFilterChanged(filter: any): void {
+    this.filter = filter;
+  }
 
 
 }

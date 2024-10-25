@@ -9,7 +9,10 @@
         <app-navbar-h></app-navbar-h>
       </section>
       <section class="container-table">
-        <app-pagina-principal></app-pagina-principal>
+        <!-- aca iria el app filter -->
+         <app-filters (filterChanged)="onFilterChanged($event)"></app-filters>
+         <!-- segun lo que se aprete en la seccion se renderiza con su data que le envia el filter -->
+        <app-pagina-principal [filter]="filter"></app-pagina-principal>
       </section>
     </section>
 </section>

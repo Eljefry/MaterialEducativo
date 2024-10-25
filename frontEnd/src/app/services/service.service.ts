@@ -23,20 +23,65 @@ export class MaterialService {
     const url = this.url + '/documents/'
     return this.http.get(url);
   }
-  
-  getSuggestedDocuments(id:string){
+  getDocumentsDepartaments(idDepto: string) {
+    const url = this.url + '/documents/departaments/' + idDepto
+    return this.http.get(url);
+  }
+  getDocumentsCarrera(idCarrera: string) {
+    const url = this.url + '/documents/carrera/' + idCarrera
+    return this.http.get(url);
+  }
+  getDocumentsMateria(idMateria: string) {
+    const url = this.url + '/documents/materia/' + idMateria
+    return this.http.get(url);
+  }
+  getDocumentsCategorys(idCategory: string) {
+    const url = this.url + '/documents/category/' + idCategory
+    return this.http.get(url);
+  }
+
+  getSuggestedDocuments(id: string) {
     const url = this.url + '/documents_suggested/' + id
     return this.http.get(url);
   }
 
-  getFolders(id:string) {
-    const url = this.url + '/last_folders_modified/' + id
+  getDepartaments() {
+    const url = this.url + '/departamentos'
     return this.http.get(url);
   }
 
-  createFolder(data:any){
+  getCarreras(idDepto?: number) {
+    let url = this.url + '/carreras';
+    // Solo agregar el idDepto si está definido
+    if (idDepto) {
+      url += '/' + idDepto;
+    }
+    return this.http.get(url);
+  }
+  getMaterias(idCarrera?: number) {
+    let url = this.url + '/materias';
+    // Solo agregar el idCarrera si está definido
+    if (idCarrera) {
+      url += '/' + idCarrera;
+    }
+    return this.http.get(url);
+  }
+
+  getCategorias() {
+    const url = this.url + '/categorias'
+    return this.http.get(url);
+  }
+
+  getFolders(id: string) {
+    const url = this.url + '/last_folders_modified/' + id
+    const headers = this.getHeader();
+    return this.http.get(url, { headers });
+  }
+
+  createFolder(data: any) {
     const url = this.url + '/create_folder/'
-    return this.http.post(url, data);
+    const headers = this.getHeader();
+    return this.http.post(url, data, { headers });
   }
 
   updateEstado(id: string, dataState: any) {
@@ -140,7 +185,7 @@ export class MaterialService {
   private loadUser(): Promise<void> {
     return new Promise((resolve, reject) => {
       const userId = this.getUserIdToken(); // Obtener el ID del token
-  
+
       if (userId) {
         this.getUserProfile(userId).subscribe(
           (userData: any) => {
@@ -165,7 +210,7 @@ export class MaterialService {
   }
 
   getUser(): Promise<any> {
-     // const user = this.getUserLocalStorage();
+    // const user = this.getUserLocalStorage();
     return this.loadUser().then(() => this.user);
   }
 }

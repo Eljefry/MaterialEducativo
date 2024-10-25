@@ -1,0 +1,55 @@
+<div class="container-filters">
+  <h1>Te damos la Bienvenida a Material Educativo</h1>
+  <section class="search-container">
+    <input class="input is-rounded search-input" type="text" placeholder="Buscar documento..." />
+    <i class="fa-solid fa-magnifying-glass lupa-icon"></i>
+    <i class="fa-solid fa-sliders filter-icon"></i>
+  </section>
+
+  
+  <ul class="items">
+    <li class="item">
+      <i class="fas fa-building fa-sm"></i>
+      <p>Departamentos</p>
+      <i class="fa-solid fa-sort-down fa-sm"></i>
+      <ul class="dropdown">
+        <li *ngFor="let departamento of departamentos" (click)="getCarreras(departamento.id); getDocuments(departamento.id,'departamento')">
+          {{ departamento.nombre }}
+        </li>
+      </ul>
+    </li>
+    <li class="item">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <p>Carreras</p>
+      <i class="fa-solid fa-sort-down fa-sm"></i>
+      <ul class="dropdown">
+        <li *ngFor="let carrera of carreras" (click)="getMaterias(carrera.id);getDocuments(carrera.id,'carrera')">
+          {{ carrera.nombre }}
+        </li>
+      </ul>
+    </li>
+    <li class="item">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <p>Materias</p>
+      <i class="fa-solid fa-sort-down fa-sm"></i>
+      <ul class="dropdown">
+        <li *ngFor="let materia of materias" (click)="getDocuments(materia.id,'materia')">
+          {{ materia.nombre }}
+        </li>
+      </ul>
+    </li>
+    <li class="item">
+      <i class="fa-solid fa-file"></i>
+      <p>Categorías</p>
+      <i class="fa-solid fa-sort-down fa-sm"></i>
+      <ul class="dropdown">
+        <li *ngFor="let categoria of categorias" (click)="getDocuments(categoria.id,'categoria')" >
+          {{ categoria.nombre }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+    <div class="overlay"></div> <!-- Overlay que cubre el fondo -->
+  
+
+</div>

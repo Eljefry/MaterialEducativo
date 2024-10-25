@@ -20,11 +20,9 @@ import { LoginComponent } from './pages/login/login.component';
 //home
 import { HomeComponent } from './pages/home/home.component'; 
 import { PaginaPrincipalComponent } from './pages/home/components/pagina-principal/pagina-principal.component';
-import { DocumentsComponent } from './pages/home/components/pagina-principal/components/documento/documents.component';
-import { FiltersComponent } from './pages/home/components/pagina-principal/components/filters/filters.component';
+import { FiltersComponent } from './pages/home/components/filters/filters.component';
 import { SidebarComponentHome } from './pages/home/components/sidebar/sidebar.component';
 import { NavbarComponent } from './pages/home/components/navbar/navbar.component';
-import { FoldersComponent } from './pages/home/components/pagina-principal/components/folders/folders.component';
 import { FavoritoComponent } from './pages/home/components/favorito/favorito.component';
 import { RecientesComponent } from './pages/home/components/recientes/recientes.component';
 import { MiUnidadComponent } from './pages/home/components/mi-unidad/mi-unidad.component';
@@ -42,6 +40,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
+
 @NgModule({
   
   declarations: [
@@ -56,14 +55,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     DocumentsTableComponent,
     LoginComponent,
     NavbarComponent,
-    FoldersComponent,
-    DocumentsComponent,
     SidebarComponentHome,
     FiltersComponent,
     PaginaPrincipalComponent,
     MiUnidadComponent,
     FavoritoComponent,
-    RecientesComponent
+    RecientesComponent,
+    
   ],
   imports: [
     BrowserModule,
