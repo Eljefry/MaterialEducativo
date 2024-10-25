@@ -1,0 +1,23 @@
+.filter-bar {
+    margin-bottom: 1rem; 
+  }
+  
+  .field.has-addons .control {
+    margin-right: 0.5rem; 
+  }
+  
+  .select {
+    display: inline-block; 
+  }
+  
+  .select select {
+    border-radius: 25px; 
+    border-color: black;
+    transition: background-color 0.3s;
+  }
+  
+
+  .select select:hover {
+    background-color: #f0f0f0; 
+  }
+  
