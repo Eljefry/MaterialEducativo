@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlertService } from 'src/app/services/alertas/alert.service';
 import { MaterialService } from 'src/app/services/service.service';
 
@@ -8,6 +8,7 @@ import { MaterialService } from 'src/app/services/service.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponentHome implements OnInit {
+  @Output() sectionSelected: EventEmitter<string> = new EventEmitter<string>();
   isDropdownActive = false;
   idUser:string="";
   constructor(private _alertService: AlertService, private _materialService: MaterialService) { }
@@ -30,8 +31,13 @@ export class SidebarComponentHome implements OnInit {
 
 
   // Alterna la visibilidad del dropdown
-  toggleDropdown() {
+  toggleDropdown(){
     this.isDropdownActive = !this.isDropdownActive;
+  }
+  
+  // Método para seleccionar una sección y emitirla
+  changeSection(section:string):void{
+      this.sectionSelected.emit(section);
   }
 
   async crearCarpeta() {
