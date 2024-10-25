@@ -7,20 +7,25 @@ from app.models import Departamento,Carrera,Materia,Categoria
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departamento
-        fields=['nombre']
+        fields=['id','nombre']
+        
+class DepartamentoCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Departamento
+        fields=['nombre','departamento']
         
 
 class CarreraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrera
-        fields=['nombre']
+        fields=['id','nombre']
         
 class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materia
-        fields=['nombre']
+        fields=['id','nombre']
         
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
-        fields=['nombre']
+        fields=['id','nombre']

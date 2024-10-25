@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from app.serializers.Documents_serializer import *
-from app.models import Documentos,Comentario,Favorito,Interaccion
+from app.models import Documentos,Comentario,Favorito,Interaccion,Carrera,Materia,CarreraMateria
 from rest_framework.permissions import IsAuthenticated
+
 
 class CreateDocument(generics.CreateAPIView):
     serializer_class=DocumentSerializer
@@ -25,7 +26,7 @@ class UpdateState(generics.UpdateAPIView):
     serializer_class=updateState
     
 class DocumentosSugeridos(generics.ListAPIView):
-    serializer_class = DocumentsSuggested
+    serializer_class = DocumentsHome
     
     def get_queryset(self):
         idUser = self.kwargs['idUser'] 
@@ -94,3 +95,61 @@ class GetDocument(generics.RetrieveAPIView):
         user=self.request.user
         document_id=self.kwargs.get('pk')
         return Documentos.objects.get(id=document_id,usuario=user)
+    
+
+#Devuelve todos los documentos a partir de un documento
+class GetDocumentsDepartaments(generics.ListAPIView):
+    serializer_class = DocumentsHome
+    
+    def get_queryset(self):
+        idDepto = self.kwargs['idDepto']  # Obtener el ID del departamento desde la URL
+        
+        # Obtener las carreras asociadas al departamento
+        carreras = Carrera.objects.filter(departamento_id=idDepto)
+        
+        # Obtener las materias asociadas a las carreras
+        materias = Materia.objects.filter(carreramateria__carrera__in=carreras)
+        
+        # Filtrar los documentos asociados a las materias
+        documentos = Documentos.objects.filter(materia__in=materias)
+        
+        return documentos
+
+
+
+class GetDocumentsCarreras(generics.ListAPIView):
+    serializer_class = DocumentsHome
+    
+    def get_queryset(self):
+        idCarrera = self.kwargs['idCarrera'] 
+        
+        materiascarreras = CarreraMateria.objects.filter(carrera_id=idCarrera)
+        
+        materias = materiascarreras.values_list('materia_id', flat=True)
+        
+        documentos = Documentos.objects.filter(materia__in=materias)
+        
+        return documentos
+    
+class GetDocumentsMateria(generics.ListAPIView):
+    serializer_class = DocumentsHome
+    def get_queryset(self):
+        idMateria = self.kwargs['idMateria'] 
+        documentos = Documentos.objects.filter(materia_id=idMateria)
+        return documentos
+    
+    
+    
+class GetDocumentsCategory(generics.ListAPIView):
+    serializer_class = DocumentsHome
+    def get_queryset(self):
+        idCategory = self.kwargs['idCategory'] 
+        documentos = Documentos.objects.filter(categoria_id=idCategory)
+        return documentos
+    
+
+
+    
+    
+    
+

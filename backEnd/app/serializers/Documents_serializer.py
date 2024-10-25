@@ -33,7 +33,7 @@ class userDocumentsFavorito(serializers.ModelSerializer):#este es un serialzidor
          fields=["title", "created_at","file","owner_name"]
          
          
-class DocumentsSuggested(serializers.ModelSerializer):
+class DocumentsHome(serializers.ModelSerializer):
     owner_name = serializers.CharField(source='owner.username', read_only=True)
     owner_foto = serializers.CharField(source='owner.foto', read_only=True)
     
