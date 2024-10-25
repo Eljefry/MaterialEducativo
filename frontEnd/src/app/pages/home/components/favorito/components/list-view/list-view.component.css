@@ -1,0 +1,51 @@
+/* Tabla y columnas */
+.table {
+    width: 100%;
+  }
+  
+.table th, .table td {
+    font-weight: 450; /* Grosor de la letra más fina */
+    color: black;
+    font-size: 0.9rem;
+    padding: 8px; /* Ajustar espacio en las celdas */
+    vertical-align: middle;
+  }
+  
+
+  
+/* Alinear las columnas de 'Propietario' y 'Última modificación' a la derecha */
+.owner-column, .modified-column {
+    text-align: right;
+    width: 25%; /* Cada una ocupa el 25% restante */
+  }
+
+.owner-column i {
+  margin-right: 20px; /* Espacio entre el ícono y el texto */
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.name-column i {
+    margin-right: 20px; /* Espacio entre el ícono y el texto */
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+  /* Alinear la columna de "Nombre" a la izquierda */
+.name-column {
+  text-align: left;
+  width: 50%; /* Para que la columna "Nombre" ocupe la mitad de la tabla */
+}
+
+/* Alinear la columna de "Propietario" al centro */
+.owner-column {
+  text-align: left; /* Cambia 'right' por 'left' si quieres alinearlo a la izquierda */
+}
+
+/* Opcional: Ajustar la columna de "Última modificación" también a la derecha o a la izquierda según desees */
+.table th, .table td {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+  
