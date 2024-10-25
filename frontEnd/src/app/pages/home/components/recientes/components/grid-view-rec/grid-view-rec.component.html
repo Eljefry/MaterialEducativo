@@ -1,0 +1,38 @@
+<section class="grid-container">
+    <!-- titulo para el grupo hoy -->
+    <ng-container *ngIf="groupedDocuments.today.length > 0">
+      <h2 class="section-title">Hoy</h2>
+      <section class="grid-item document" *ngFor="let doc of groupedDocuments.today">
+        <i class="fa-solid fa-file"></i>
+        <span>{{ doc.title }}</span>
+      </section>
+    </ng-container>
+  
+    <!-- titulo para el grupo ultima Semana -->
+    <ng-container *ngIf="groupedDocuments.lastWeek.length > 0">
+      <h2 class="section-title">Última Semana</h2>
+      <section class="grid-item document" *ngFor="let doc of groupedDocuments.lastWeek">
+        <i class="fa-solid fa-file"></i>
+        <span>{{ doc.title }}</span>
+      </section>
+    </ng-container>
+  
+    <!-- titulo para el grupo ultimo mes -->
+    <ng-container *ngIf="groupedDocuments.lastMonth.length > 0">
+      <h2 class="section-title">Último Mes</h2>
+      <section class="grid-item document" *ngFor="let doc of groupedDocuments.lastMonth">
+        <i class="fa-solid fa-file"></i>
+        <span>{{ doc.title }}</span>
+      </section>
+    </ng-container>
+  
+    <!-- titulo para el grupo mas antiguos -->
+    <ng-container *ngIf="groupedDocuments.older.length > 0">
+      <h2 class="section-title">Más Antiguos</h2>
+      <section class="grid-item document" *ngFor="let doc of groupedDocuments.older">
+        <i class="fa-solid fa-file"></i>
+        <span>{{ doc.title }}</span>
+      </section>
+    </ng-container>
+  </section>
+  

@@ -1,0 +1,52 @@
+.recientes-container{
+    padding-left: 10px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 20px;
+  }
+  
+  h1.title{
+    font-weight: 450;
+    color: black;
+    padding-top: 6px;
+  }
+  
+  .view-buttons .buttons {
+    display: flex;
+    padding-right: 20px;
+    align-items: center;
+  }
+  
+  .view-buttons .button {
+    padding: 7px 20px; 
+  }
+  
+  .view-buttons .button i {
+    font-size: 1.3rem; /* modifico el tamaño del icono dentro del boton */
+  }
+  
+  .view-buttons .button:first-child {
+    border-top-left-radius: 20px; 
+    border-bottom-left-radius: 20px; 
+    border-color: black;
+  }
+  
+  .view-buttons .button:last-child {
+    border-top-right-radius: 20px; 
+    border-bottom-right-radius: 20px; 
+    border-color: black;
+  }
+  
+  .view-buttons .button.is-active {
+    background-color: skyblue;
+    border-color: #1e90ff; 
+    border-color: black;
+  }
+  
+  
+  
