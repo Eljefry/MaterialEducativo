@@ -14,6 +14,12 @@ export class FiltersComponent implements OnInit {
   carreras: any;
   materias: any;
   categorias: any;
+
+  depto:string='';
+  carrera:string='';
+  materia:string='';
+  category:string='';
+
   
 
   @Output() filterChanged = new EventEmitter<any>();
@@ -24,6 +30,22 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() {
     this.getFilters();
+  }
+
+  setDepto(value:string) {
+    this.depto=value;
+    this.setCarrera('');
+    this.setMateria('')
+  }
+  setCarrera(value:string) {
+    this.carrera=value;
+    this.setMateria('');
+  }
+  setMateria(value:string) {
+    this.materia=value;
+  }
+  setCategory(value:string) {
+    this.category=value;
   }
 
 
@@ -40,8 +62,6 @@ export class FiltersComponent implements OnInit {
 
   getFilters() {
     this.getDepartaments();
-    this.getCarreras();
-    this.getMaterias();
     this.getCategorias();
 
   }
