@@ -12,7 +12,7 @@
 </mat-list>
 
 
-<ng-container *ngIf="filter==null">
+<ng-container *ngIf="!filter">
 
     <div mat-subheader>Documentos sugeridos</div>
 
@@ -46,7 +46,7 @@
     </table>
 </ng-container>
 
-<ng-container *ngIf="filter!=null">
+<ng-container *ngIf="filter">
     <div mat-subheader>Resultado de la busqueda</div>
 
     <table mat-table [dataSource]="documentsFilter" matSort class="mat-elevation-z8">

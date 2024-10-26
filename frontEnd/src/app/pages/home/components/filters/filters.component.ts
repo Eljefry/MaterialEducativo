@@ -15,12 +15,12 @@ export class FiltersComponent implements OnInit {
   materias: any;
   categorias: any;
 
-  depto:string='';
-  carrera:string='';
-  materia:string='';
-  category:string='';
+  depto: string = '';
+  carrera: string = '';
+  materia: string = '';
+  category: string = '';
 
-  
+
 
   @Output() filterChanged = new EventEmitter<any>();
   constructor(
@@ -32,33 +32,51 @@ export class FiltersComponent implements OnInit {
     this.getFilters();
   }
 
-  setDepto(value:string) {
-    this.depto=value;
+  //estos set son para el valor del select
+  setDepto(value: string) {
+    this.depto = value;
     this.setCarrera('');
-    this.setMateria('')
   }
-  setCarrera(value:string) {
-    this.carrera=value;
+  setCarrera(value: string) {
+    this.carrera = value;
     this.setMateria('');
   }
-  setMateria(value:string) {
-    this.materia=value;
+  setMateria(value: string) {
+    this.materia = value;
+    this.setCategory('');
   }
-  setCategory(value:string) {
-    this.category=value;
+  setCategory(value: string) {
+    this.category = value;
+  }
+
+  //estos set son para los valores de la lista del select
+  setDepartamentos(value?: string | null) {
+    this.setCarreras(value);
+  }
+
+  setCarreras(value?: string | null) {
+    if (!this.depto) {
+      this.carreras = value;
+    }
+    this.setMaterias(value);
+  }
+
+  setMaterias(value?: string | null) {
+    if (!this.carrera) {
+      this.materias = value;
+
+    }
   }
 
 
   getDocuments(id: number, value: string) {
-    const filter: { id:number,value: string }  = {
-      id:id,
-      value:value
-    }
+    if (!id) return;
+    const filter: { id: number, value: string } = { id, value };
     this.filterChanged.emit(filter);
 
   }
 
- 
+
 
   getFilters() {
     this.getDepartaments();
@@ -75,7 +93,7 @@ export class FiltersComponent implements OnInit {
     });
   }
 
-  getCarreras(idDepto ?:number) {
+  getCarreras(idDepto?: number) {
     this._materialService.getCarreras(idDepto).subscribe({
       next: (response: any) => {
         this.carreras = response;
@@ -84,7 +102,7 @@ export class FiltersComponent implements OnInit {
     });
   }
 
-  getMaterias(idCarrera?:number) {
+  getMaterias(idCarrera?: number) {
     this._materialService.getMaterias(idCarrera).subscribe({
       next: (response: any) => {
         this.materias = response;

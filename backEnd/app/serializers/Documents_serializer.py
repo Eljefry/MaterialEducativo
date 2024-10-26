@@ -39,7 +39,7 @@ class DocumentsHome(serializers.ModelSerializer):
     
     class Meta:
         model=Documentos
-        fields=["title", "created_at","file","owner_name","owner_foto"]
+        fields=["title", "created_at","file","owner_name","owner_foto","categoria_id"]
     
         
 

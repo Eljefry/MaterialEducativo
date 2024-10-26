@@ -8,20 +8,27 @@
 
   
   <ul class="items">
-    <li class="item">
-      <i class="fas fa-building fa-sm"></i>
-      <p *ngIf="depto">{{ depto }}</p>
-      <p *ngIf="!depto">departamentos</p>
-      <i class="fa-solid fa-sort-down fa-sm"></i>
-      <ul class="dropdown">
-        <li *ngFor="let departamento of departamentos" (click)="setDepto(departamento.nombre);getCarreras(departamento.id); getDocuments(departamento.id,'departamento')">
-          {{ departamento.nombre }}
-        </li>
-      </ul>
-    </li>
-    <li class="item">
+    <li 
+    class="item" 
+    [ngClass]="{'has-depto': depto}"
+  >
+    <i class="fas fa-building fa-sm"></i>
+    <p *ngIf="depto" (click)="setDepto('');setDepartamentos(null)">{{ depto }} </p>
+    <p *ngIf="!depto">Departamentos</p>
+    <i class="fa-solid fa-sort-down fa-sm"></i>
+    <ul class="dropdown">
+      <li 
+        *ngFor="let departamento of departamentos" 
+        (click)="setDepto(departamento.nombre); getCarreras(departamento.id); getDocuments(departamento.id, 'departamento')"
+      >
+        {{ departamento.nombre }}
+      </li>
+    </ul>
+  </li>
+    
+    <li class="item" [ngClass]="{'has-carrera': carrera}">
       <i class="fa-solid fa-graduation-cap"></i>
-      <p *ngIf="carrera">{{ carrera }}</p>
+      <p *ngIf="carrera"  (click)="setCarrera('');setCarreras(null)" >{{ carrera }}</p>
       <p *ngIf="!carrera">Carreras</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">
@@ -30,9 +37,9 @@
         </li>
       </ul>
     </li>
-    <li class="item">
+    <li class="item" [ngClass]="{'has-materia': materia}">
       <i class="fa-solid fa-book-open-reader"></i>
-      <p *ngIf="materia">{{ materia }}</p>
+      <p *ngIf="materia" (click)="setMateria('');setMaterias(null)">{{ materia }}</p>
       <p *ngIf="!materia">Materias</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">
@@ -41,9 +48,9 @@
         </li>
       </ul>
     </li>
-    <li class="item">
+    <li class="item" [ngClass]="{'has-category': category}">
       <i class="fa-solid fa-file"></i>
-      <p *ngIf="category">{{ category }}</p>
+      <p *ngIf="category" (click)="setCategory('')">{{ category }}</p>
       <p *ngIf="!category">Categorias</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">

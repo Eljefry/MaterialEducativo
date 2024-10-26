@@ -11,9 +11,13 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   folders: any
   displayedColumns: string[] = ['nombre', 'creado', 'propietario'];
   documentSuggested: any;
-  documentsFilter: any;
-  @Input() filter: any
+  documentsFilter: any[] = [];
+  documentsFilterRespaldo: any[] = [];
+  @Input() filter: any = ''
   @ViewChild(MatSort) sort!: MatSort;
+  departamento: boolean = false
+  carrera: boolean = false
+  materia: boolean = false
 
   constructor(private _Materialservice: MaterialService, private _alertService: AlertService) { }
 
@@ -22,22 +26,24 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log("valor de filter", this.filter);
+    if (!this.filter) return;
 
-    if (this.filter?.value === "departamento") {
-      this.getDocumentsDepartaments(this.filter.id);
+    switch (this.filter.value) {
+        case "departamento":
+            this.getDocumentsDepartaments(this.filter.id);
+            break;
+        case "carrera":
+            this.getDocumentsCarrera(this.filter.id);
+            break;
+        case "materia":
+            this.getDocumentsMateria(this.filter.id);
+            break;
+        case "categoria":
+            this.getDocumentsCategory(this.filter.id);
+            break;
     }
-    if (this.filter?.value === "carrera") {
-      this.getDocumentsCarrera(this.filter.id);
-    }
-    if (this.filter?.value === "materia") {
-      this.getDocumentsMateria(this.filter.id);
-    }
-    if (this.filter?.value === "categoria") {
-      this.getDocumentsCategory(this.filter.id);
-    }
+}
 
-  }
 
   getUser() {
     this._Materialservice.getUser().then(usuario => {
@@ -71,6 +77,8 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
     this._Materialservice.getDocumentsDepartaments(id).subscribe({
       next: (response: any) => {
         this.documentsFilter = response;
+        this.documentsFilterRespaldo = this.documentsFilter;
+        console.log(this.documentsFilter);
       },
       error: () => this._alertService.error('Respuesta Fallida')
     });
@@ -79,6 +87,7 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
     this._Materialservice.getDocumentsCarrera(id).subscribe({
       next: (response: any) => {
         this.documentsFilter = response;
+        this.documentsFilterRespaldo = this.documentsFilter;
       },
       error: () => this._alertService.error('Respuesta Fallida')
     });
@@ -87,19 +96,33 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
     this._Materialservice.getDocumentsMateria(id).subscribe({
       next: (response: any) => {
         this.documentsFilter = response;
+        this.documentsFilterRespaldo = this.documentsFilter;
       },
       error: () => this._alertService.error('Respuesta Fallida')
     });
   }
+
   getDocumentsCategory(id: string) {
-    this._Materialservice.getDocumentsCategorys(id).subscribe({
-      next: (response: any) => {
-        this.documentsFilter = response;
-      },
-      error: () => this._alertService.error('Respuesta Fallida')
-    });
-  }
 
+  //mejor ver que filters hay y en base a eso que el backend se encargue de filtar..............
+    // Restaurar la copia de respaldo antes de aplicar el nuevo filtro
 
+ 
+    this.documentsFilter = [...this.documentsFilterRespaldo];
+
+    // Si ya hay algún filtro (departamento, carrera o materia), aplicar el filtro localmente
+    if (this.departamento || this.carrera || this.materia) {
+        this.documentsFilter = this.documentsFilter.filter((document: any) => document.categoria_id === id);
+    } else {
+        // Si no hay ningún filtro aplicado previamente, hacer una llamada al backend
+        this._Materialservice.getDocumentsCategorys(id).subscribe({
+            next: (response: any) => {
+                this.documentsFilter = response;
+                this.documentsFilterRespaldo = response; // Actualizar respaldo
+            },
+            error: () => this._alertService.error('Respuesta Fallida')
+        });
+    }
+}
 
 }
