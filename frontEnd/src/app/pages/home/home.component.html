@@ -10,7 +10,7 @@
       </section>
       <section class="container-table">
         <!-- aca iria el app filter -->
-         <app-filters (filterChanged)="onFilterChanged($event)"></app-filters>
+         <app-filter-principal (filterChanged)="onFilterChanged($event)"></app-filter-principal>
          <!-- segun lo que se aprete en la seccion se renderiza con su data que le envia el filter -->
         <app-pagina-principal [filter]="filter"></app-pagina-principal>
       </section>

@@ -20,7 +20,7 @@ import { LoginComponent } from './pages/login/login.component';
 //home
 import { HomeComponent } from './pages/home/home.component'; 
 import { PaginaPrincipalComponent } from './pages/home/components/pagina-principal/pagina-principal.component';
-import { FiltersComponent } from './pages/home/components/filters/filters.component';
+import { FilterPrincipalComponent } from './pages/home/components/filter-principal/filter-principal.component';
 import { SidebarComponentHome } from './pages/home/components/sidebar/sidebar.component';
 import { NavbarComponent } from './pages/home/components/navbar/navbar.component';
 import { FavoritoComponent } from './pages/home/components/favorito/favorito.component';
@@ -56,7 +56,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     LoginComponent,
     NavbarComponent,
     SidebarComponentHome,
-    FiltersComponent,
+    FilterPrincipalComponent,
     PaginaPrincipalComponent,
     MiUnidadComponent,
     FavoritoComponent,

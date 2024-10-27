@@ -1,14 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { AlertService } from 'src/app/services/alertas/alert.service';
 import { MaterialService } from 'src/app/services/service.service';
-
-
 @Component({
-  selector: 'app-filters',
-  templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css']
+  selector: 'app-filter-principal',
+  templateUrl: './filter-principal.component.html',
+  styleUrls: ['./filter-principal.component.css']
 })
-export class FiltersComponent implements OnInit {
+export class FilterPrincipalComponent implements OnInit {
 
   departamentos: any;
   carreras: any;
@@ -120,4 +118,12 @@ export class FiltersComponent implements OnInit {
     });
   }
 
+  
+
+
+
+
 }
+
+
+
