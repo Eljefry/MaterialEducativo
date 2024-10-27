@@ -24,23 +24,23 @@
       </section>
     </section>
     <section class="menu-items">
-      <button class="button is-white">
+      <button class="button is-white" (click)="changeSection('paginaPrincipal')">
         <i class="fa-solid fa-house"></i>
         <span>Pagina principal </span> 
       </button>
-      <button class="button is-white">
+      <button class="button is-white" (click)="changeSection('miUnidad')">
         <i class="fa-solid fa-desktop"></i>
         <span>Mi unidad </span> 
       </button>
-      <button class="button is-white">
+      <button class="button is-white" (click)="changeSection('favorito')">
         <i class="fa-solid fa-star"></i>
         <span>Favoritos</span>
       </button>
-      <button class="button is-white">
+      <button class="button is-white" (click)="changeSection('recientes')">
         <i class="fa-regular fa-clock"></i>
         <span>Recientes</span>
       </button>
-      <button class="button is-white">
+      <button class="button is-white" (click)="changeSection('papelera')">
         <i class="fa-solid fa-trash"></i>
         <span>Papelera</span>  
       </button>

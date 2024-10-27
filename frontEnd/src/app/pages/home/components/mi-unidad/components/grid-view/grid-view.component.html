@@ -1,0 +1,15 @@
+<section class="grid-container">
+  <!-- titulo para Carpetas -->
+  <h2 class="section-title">Carpetas</h2>
+  <section class="grid-item folder" *ngFor="let folder of foldersData">
+    <i class="fa-solid fa-folder"></i>
+    <span>{{ folder.nombre }}</span>
+  </section>
+
+  <!-- titulo para Documentos -->
+  <h2 class="section-title">Documentos</h2>
+  <section class="grid-item document" *ngFor="let document of documents">
+    <i class="fa-solid fa-file"></i>
+    <span>{{ document.title }}</span>
+  </section>
+</section>

@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-
 import { NgxPaginationModule} from 'ngx-pagination';
 
 //componentes
@@ -26,9 +25,15 @@ import { NavbarComponent } from './pages/home/components/navbar/navbar.component
 import { FavoritoComponent } from './pages/home/components/favorito/favorito.component';
 import { RecientesComponent } from './pages/home/components/recientes/recientes.component';
 import { MiUnidadComponent } from './pages/home/components/mi-unidad/mi-unidad.component';
-
-
+import { ListViewComponent } from './pages/home/components/mi-unidad/components/list-view/list-view.component';
+import { GridViewComponent } from './pages/home/components/mi-unidad/components/grid-view/grid-view.component';
+import { filtersComponent } from './pages/home/components/filters/filters.component';
+import { ListViewComponentFav } from './pages/home/components/favorito/components/list-view/list-view.component';
+import { GridViewComponentFav } from './pages/home/components/favorito/components/grid-view/grid-view.component';
+import { ListViewRecComponent } from './pages/home/components/recientes/components/list-view-rec/list-view-rec.component';
+import { GridViewRecComponent } from './pages/home/components/recientes/components/grid-view-rec/grid-view-rec.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+
 //componentes angular material
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -61,7 +66,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MiUnidadComponent,
     FavoritoComponent,
     RecientesComponent,
-    
+    ListViewComponent,
+    GridViewComponent,
+    filtersComponent,
+    ListViewComponentFav,
+    GridViewComponentFav,
+    ListViewRecComponent,
+    GridViewRecComponent
   ],
   imports: [
     BrowserModule,

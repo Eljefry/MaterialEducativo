@@ -1,0 +1,36 @@
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th class="name-column">Nombre</th>
+      <th class="owner-column">Propietario</th>
+      <th>Última modificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- filas para las carpetas -->
+    <tr *ngFor="let folder of foldersData">
+      <td class="name-column">
+        <i class="fa-solid fa-folder"></i>
+        {{ folder.nombre }}
+      </td>
+      <td class="owner-column">
+        <i class="fa-solid fa-user"></i>
+        {{ folder.usuario }}
+      </td>
+      <td>{{ folder.updated_at | date }}</td>
+    </tr>
+
+    <!-- filas para los documentos -->
+    <tr *ngFor="let document of documents">
+      <td class="name-column">
+        <i class="fa-solid fa-file"></i>
+        {{ document.title }}
+      </td>
+      <td class="owner-column">
+        <i class="fa-solid fa-user"></i>
+        {{ document.owner }}
+      </td>
+      <td>{{ document.updated_at | date }}</td>
+    </tr>
+  </tbody>
+</table>

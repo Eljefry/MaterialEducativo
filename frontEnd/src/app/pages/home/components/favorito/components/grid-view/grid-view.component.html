@@ -1,0 +1,7 @@
+<section class="grid-container">
+    <h2 class="section-title">Todos los elementos</h2>
+    <section class="grid-item document" *ngFor="let document of documents">
+      <i class="fa-solid fa-file"></i>
+      <span>{{ document.title }}</span>
+    </section>
+</section>

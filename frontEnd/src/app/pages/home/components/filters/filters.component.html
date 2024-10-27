@@ -1,0 +1,37 @@
+<section class="filter-bar">
+    <section class="field has-addons">
+      <!-- filtro por tipo de archivo -->
+      <section class="control">
+        <section class="select">
+          <select [(ngModel)]="filters.fileType" (change)="onFilterChange()" class="button is-rounded">
+            <option value="">Tipo de Archivo</option>
+            <option value="folder">Carpetas</option>
+            <option value="pdf">Documentos PDF</option>
+          </select>
+        </section>
+      </section>
+  
+      <!-- filtro por fecha de creación (ordenar) -->
+      <section class="control">
+        <section class="select">
+          <select [(ngModel)]="filters.creationDate" (change)="onFilterChange()" class="button is-rounded">
+            <option value="">Ordenar por</option>
+            <option value="newest">Del nuevo al antiguo</option>
+            <option value="oldest">Del antiguo al nuevo</option>
+          </select>
+        </section>
+      </section>
+  
+      <!-- filtro por tipo de vista -->
+      <section class="control">
+        <section class="select">
+          <select [(ngModel)]="filters.viewType" (change)="onFilterChange()" class="button is-rounded">
+            <option value="">Ver</option>
+            <option value="folders">Solo Carpetas</option>
+            <option value="documents">Solo Documentos</option>
+          </select>
+        </section>
+      </section>
+    </section>
+  </section>
+  
