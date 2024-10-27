@@ -1,3 +1,26 @@
-<p>
-  mi-unidad works!
-</p>
+<section class="mi-unidad-container">
+  <section class="header-container">
+    <h1 class="title is-4">Mi Unidad</h1>
+    <section class="view-buttons">
+      <section class="buttons has-addons">
+        <button class="button"
+          [ngClass]="{'is-active': selectView === 'list'}" 
+          (click)="toggleView('list')">
+          <i class="fa-solid fa-list"></i>
+        </button>
+        <button class="button" 
+        [ngClass]="{'is-active': selectView === 'grid'}"
+          (click)="toggleView('grid')">
+          <i class="fa-solid fa-th"></i>
+        </button>
+      </section>
+    </section>
+  </section>
+
+  <section class="filter-container">
+    <app-Filters></app-Filters>
+  </section>
+
+  <app-list-view *ngIf="isListView" [foldersData]="foldersData" [documents]="documents"></app-list-view>
+  <app-grid-view *ngIf="!isListView" [foldersData]="foldersData" [documents]="documents"></app-grid-view>
+</section>

@@ -1,3 +1,26 @@
-<p>
-  favorito works!
-</p>
+<section class="favoritos-container">
+  <section class="header-container">
+    <h1 class="title is-4">Favoritos</h1>
+    <div class="view-buttons">
+      <div class="buttons has-addons">
+        <button class="button"
+          [ngClass]="{'is-active': selectView === 'list'}" 
+          (click)="toggleView('list')">
+          <i class="fa-solid fa-list"></i>
+        </button>
+        <button class="button" 
+        [ngClass]="{'is-active': selectView === 'grid'}"
+          (click)="toggleView('grid')">
+          <i class="fa-solid fa-th"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="filter-container">
+    <app-Filters></app-Filters>
+  </section>
+
+  <app-list-view-fav *ngIf="isListView" [documents]="documents"></app-list-view-fav>
+  <app-grid-view-fav *ngIf="!isListView" [documents]="documents"></app-grid-view-fav>
+</section>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, tap, throwError } from 'rxjs';
+import { forkJoin, Observable, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
 
@@ -40,15 +40,38 @@ export class MaterialService {
     return this.http.get(url);
   }
 
-  getSuggestedDocuments(id: string) {
+ 
+
+  getDocumentsUser(id:string) {
+    const url = this.url + '/user_documents/'+id
+    const headers = this.getHeader();
+    return this.http.get(url,{headers});
+  }
+  getFavoritesDocuments(id:string) {
+    const url = this.url + '/favorite_documents/'+id
+    const headers = this.getHeader();
+    return this.http.get(url,{headers});
+  }
+
+
+  getFoldersUser(id:string) {
+    const url = this.url + '/list_user_folders/' + id
+    const headers = this.getHeader();
+    return this.http.get(url,{headers});
+  }
+  
+  getSuggestedDocuments(id:string){
     const url = this.url + '/documents_suggested/' + id
-    return this.http.get(url);
+    const headers = this.getHeader();
+    return this.http.get(url,{headers});
   }
 
   getDepartaments() {
     const url = this.url + '/departamentos'
     return this.http.get(url);
   }
+    
+  
 
   getCarreras(idDepto?: number) {
     let url = this.url + '/carreras';
@@ -212,5 +235,29 @@ export class MaterialService {
   getUser(): Promise<any> {
     // const user = this.getUserLocalStorage();
     return this.loadUser().then(() => this.user);
+  }
+
+    //--------------------------------------------------------------------------------------------------
+  //METODOS PARA LAS SECTIONS DEL SIDEBAR DEL HOME
+
+  PaginaPrincipalData(id:string) {
+  //combina ambas peticiones,documentos sugeridos y carpetas modificadas
+  const suggestedDocs=this.getSuggestedDocuments(id);
+  const folders=this.getFolders(id);
+
+  return forkJoin({//me devuelve un objeto con 2 campos recien cuando ambas peticiones fueron realizadas, 
+    suggestedDocuments: suggestedDocs,//campo con la data de la primera petición
+    modifiedFolders:folders //campo con la data de la segunda petición
+   });
+  }
+  
+  miUnidad(id:string){//obtendra las carpetas y documentos del usuario
+    const userDocuments=this.getDocumentsUser(id);
+    const userFolders=this.getFoldersUser(id);
+    
+    return forkJoin({
+      documents:userDocuments,
+      folders:userFolders
+    });
   }
 }

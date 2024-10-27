@@ -1,0 +1,44 @@
+/* Estilos para la tabla */
+.table {
+    width: 100%;
+}
+
+.table th, .table td {
+    font-weight: 450; /* Letra más fina */
+    color: black;
+    font-size: 0.9rem;
+    padding: 8px; /* Espacio en las celdas */
+    vertical-align: middle;
+}
+
+/* Columnas alineadas */
+.name-column {
+    text-align: left;
+    width: 50%;
+}
+
+.owner-column {
+    text-align: left;
+    width: 25%;
+}
+
+/* Última modificación */
+.table th, .table td {
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+/* Íconos */
+.name-column i, .owner-column i {
+    margin-right: 20px; /* Espacio entre el ícono y el texto */
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+/* Estilo para los títulos de los grupos (Hoy, Última Semana, etc.) */
+tbody tr td[colspan="3"] {
+    background-color: #f5f5f5; /* Fondo para diferenciar los títulos */
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+}

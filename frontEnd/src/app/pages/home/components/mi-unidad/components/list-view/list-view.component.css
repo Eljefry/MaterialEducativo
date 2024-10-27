@@ -1,0 +1,46 @@
+.table {
+    width: 100%;
+  }
+  
+.table th, .table td {
+    font-weight: 450; 
+    color: black;
+    font-size: 0.9rem;
+    padding: 8px;
+    vertical-align: middle;
+  }
+  
+
+  
+.owner-column, .modified-column {
+    text-align: right;
+    width: 25%;
+  }
+
+.owner-column i {
+  margin-right: 20px;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.name-column i {
+    margin-right: 20px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.name-column {
+  text-align: left;
+  width: 50%; 
+}
+
+.owner-column {
+  text-align: left; 
+}
+
+.table th, .table td {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+  

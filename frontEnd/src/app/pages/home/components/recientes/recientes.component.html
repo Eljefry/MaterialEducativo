@@ -1,3 +1,26 @@
-<p>
-  recientes works!
-</p>
+<section class="recientes-container">
+  <section class="header-container">
+    <h1 class="title is-4">Recientes</h1>
+    <section class="view-buttons">
+      <section class="buttons has-addons">
+        <button class="button"
+          [ngClass]="{'is-active': selectView === 'list'}" 
+          (click)="toggleView('list')">
+          <i class="fa-solid fa-list"></i>
+        </button>
+        <button class="button" 
+        [ngClass]="{'is-active': selectView === 'grid'}"
+          (click)="toggleView('grid')">
+          <i class="fa-solid fa-th"></i>
+        </button>
+      </section>
+    </section>
+  </section>
+
+  <section class="filter-container">
+    <app-Filters></app-Filters>
+  </section>
+
+  <app-list-view-rec *ngIf="isListView" [groupedDocuments]="groupedDocuments"></app-list-view-rec>
+  <app-grid-view-rec *ngIf="!isListView" [groupedDocuments]="groupedDocuments"></app-grid-view-rec>
+</section>

@@ -1,0 +1,75 @@
+<table class="table is-fullwidth is-hoverable">
+    <thead>
+      <tr>
+        <th class="name-column">Nombre</th>
+        <th class="owner-column">Propietario</th>
+        <th>Última modificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- grupo Hoy -->
+      <tr *ngIf="groupedDocuments.today.length > 0">
+        <td colspan="3"><strong>Hoy</strong></td>
+      </tr>
+      <tr *ngFor="let doc of groupedDocuments.today">
+        <td class="name-column">
+          <i class="fa-solid fa-file"></i>
+          {{ doc.title }}
+        </td>
+        <td class="owner-column">
+          <i class="fa-solid fa-user"></i>
+          {{ doc.owner }}
+        </td>
+        <td>{{ doc.updated_at | date }}</td>
+      </tr>
+  
+      <!-- grupo ultima semana -->
+      <tr *ngIf="groupedDocuments.lastWeek.length > 0">
+        <td colspan="3"><strong>Última Semana</strong></td>
+      </tr>
+      <tr *ngFor="let doc of groupedDocuments.lastWeek">
+        <td class="name-column">
+          <i class="fa-solid fa-file"></i>
+          {{ doc.title }}
+        </td>
+        <td class="owner-column">
+          <i class="fa-solid fa-user"></i>
+          {{ doc.owner }}
+        </td>
+        <td>{{ doc.updated_at | date }}</td>
+      </tr>
+  
+      <!-- grupo ultimo mes -->
+      <tr *ngIf="groupedDocuments.lastMonth.length > 0">
+        <td colspan="3"><strong>Último Mes</strong></td>
+      </tr>
+      <tr *ngFor="let doc of groupedDocuments.lastMonth">
+        <td class="name-column">
+          <i class="fa-solid fa-file"></i>
+          {{ doc.title }}
+        </td>
+        <td class="owner-column">
+          <i class="fa-solid fa-user"></i>
+          {{ doc.owner }}
+        </td>
+        <td>{{ doc.updated_at | date }}</td>
+      </tr>
+  
+      <!-- grupo mas antiguos -->
+      <tr *ngIf="groupedDocuments.older.length > 0">
+        <td colspan="3"><strong>Más Antiguos</strong></td>
+      </tr>
+      <tr *ngFor="let doc of groupedDocuments.older">
+        <td class="name-column">
+          <i class="fa-solid fa-file"></i>
+          {{ doc.title }}
+        </td>
+        <td class="owner-column">
+          <i class="fa-solid fa-user"></i>
+          {{ doc.owner }}
+        </td>
+        <td>{{ doc.updated_at | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
