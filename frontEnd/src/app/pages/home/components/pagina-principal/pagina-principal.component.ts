@@ -13,7 +13,7 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   documentSuggested: any;
   documentsFilter: any[] = [];
   documentsFilterRespaldo: any[] = [];
-  @Input() filter: any = ''
+  @Input() filters: any = ''
   @ViewChild(MatSort) sort!: MatSort;
   departamento: boolean = false
   carrera: boolean = false
@@ -25,24 +25,27 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
     this.getUser();
   }
 
+  //cada cambio en el input filter se va ejecutando
   ngOnChanges(): void {
-    if (!this.filter) return;
-
-    switch (this.filter.value) {
-        case "departamento":
-            this.getDocumentsDepartaments(this.filter.id);
-            break;
-        case "carrera":
-            this.getDocumentsCarrera(this.filter.id);
-            break;
-        case "materia":
-            this.getDocumentsMateria(this.filter.id);
-            break;
-        case "categoria":
-            this.getDocumentsCategory(this.filter.id);
-            break;
+    //aca chequea el ultimo filtro
+    switch (this.filters?.lastFilter?.value) {
+      case "departamento":
+        this.getDocumentsDepartaments(this.filters.departamento.id);
+        break;
+      case "carrera":
+        this.getDocumentsCarrera(this.filters.carrera.id);
+        break;
+      case "materia":
+        this.getDocumentsMateria(this.filters.materia.id);
+        break;
+      case "categoria":
+        this.getDocumentsCategory(this.filters.categoria.id);
+        break;
+      default:
+        //si se envia vacio:
+        this.reestablecerTabla();
     }
-}
+  }
 
 
   getUser() {
@@ -66,7 +69,6 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   getDocuments(idUser: string) {
     this._Materialservice.getSuggestedDocuments(idUser).subscribe({
       next: (response: any) => {
-        console.log("documentos", response);
         this.documentSuggested = response;
       },
       error: () => this._alertService.error('Respuesta Fallida')
@@ -104,25 +106,44 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
 
   getDocumentsCategory(id: string) {
 
-  //mejor ver que filters hay y en base a eso que el backend se encargue de filtar..............
-    // Restaurar la copia de respaldo antes de aplicar el nuevo filtro
-
- 
     this.documentsFilter = [...this.documentsFilterRespaldo];
 
-    // Si ya hay algún filtro (departamento, carrera o materia), aplicar el filtro localmente
-    if (this.departamento || this.carrera || this.materia) {
-        this.documentsFilter = this.documentsFilter.filter((document: any) => document.categoria_id === id);
+    // Si ya hay algún filtro (departamento, carrera o materia), aplicar el filtro localmente sin realizar la peticion al servidor
+    if (this.filters) {
+      this.documentsFilter = this.documentsFilter.filter((document: any) => document.categoria_id === id);
     } else {
-        // Si no hay ningún filtro aplicado previamente, hacer una llamada al backend
-        this._Materialservice.getDocumentsCategorys(id).subscribe({
-            next: (response: any) => {
-                this.documentsFilter = response;
-                this.documentsFilterRespaldo = response; // Actualizar respaldo
-            },
-            error: () => this._alertService.error('Respuesta Fallida')
-        });
+      // Si no hay ningún filtro aplicado previamente, hacer una llamada al backend
+      this._Materialservice.getDocumentsCategorys(id).subscribe({
+        next: (response: any) => {
+          this.documentsFilter = response;
+          this.documentsFilterRespaldo = response; // Actualizar respaldo
+        },
+        error: () => this._alertService.error('Respuesta Fallida')
+      });
     }
-}
+  }
 
+  //esta funcion se va a ejecutar cuando el usuario saque un filtro, de esta manera habra que actualizar los datos con los filtros actuales...
+  //PD: el orden de los if es importante ya que tenemos que chequear de atras para adelante de estos filtros en cascada
+  reestablecerTabla() {
+    if (this.filters?.materia.id!='') {
+      this.getDocumentsMateria(this.filters.materia.id);
+      return;
+    }else{
+
+      if (this.filters?.carrera.id!='') {
+        this.getDocumentsCarrera(this.filters.carrera.id);
+        return;
+      }else{
+        
+        if (this.filters?.departamento.id!='') {
+          this.getDocumentsDepartaments(this.filters.departamento.id);
+          return;
+        }else{
+          this.filters=undefined;
+        }
+      }
+
+    }
+  }
 }

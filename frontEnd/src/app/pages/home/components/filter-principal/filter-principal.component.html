@@ -10,51 +10,51 @@
   <ul class="items">
     <li 
     class="item" 
-    [ngClass]="{'has-depto': depto}"
+    [ngClass]="{'has-depto': this.filters.departamento.nombre}"
   >
     <i class="fas fa-building fa-sm"></i>
-    <p *ngIf="depto" (click)="setDepto('');setDepartamentos(null)">{{ depto }} </p>
-    <p *ngIf="!depto">Departamentos</p>
+    <p *ngIf="filters.departamento.nombre" (click)="setDepto('','');setCarreras(null);sendFilter('')">{{ filters.departamento.nombre }} </p>
+    <p *ngIf="!filters.departamento.nombre">Departamentos</p>
     <i class="fa-solid fa-sort-down fa-sm"></i>
     <ul class="dropdown">
       <li 
         *ngFor="let departamento of departamentos" 
-        (click)="setDepto(departamento.nombre); getCarreras(departamento.id); getDocuments(departamento.id, 'departamento')"
+        (click)="setDepto(departamento.id,departamento.nombre); getCarreras(departamento.id); sendFilter('departamento')"
       >
         {{ departamento.nombre }}
       </li>
     </ul>
   </li>
     
-    <li class="item" [ngClass]="{'has-carrera': carrera}">
+    <li class="item" [ngClass]="{'has-carrera': filters.carrera.nombre}">
       <i class="fa-solid fa-graduation-cap"></i>
-      <p *ngIf="carrera"  (click)="setCarrera('');setCarreras(null)" >{{ carrera }}</p>
-      <p *ngIf="!carrera">Carreras</p>
+      <p *ngIf="filters.carrera.nombre"  (click)="setCarrera('','');setCarreras(null);sendFilter('')" >{{ filters.carrera.nombre }}</p>
+      <p *ngIf="!filters.carrera.nombre">Carreras</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">
-        <li *ngFor="let carrera of carreras" (click)="setCarrera(carrera.nombre);getMaterias(carrera.id);getDocuments(carrera.id,'carrera')">
+        <li *ngFor="let carrera of carreras" (click)="setCarrera(carrera.id,carrera.nombre);getMaterias(carrera.id);sendFilter('carrera')">
           {{ carrera.nombre }}
         </li>
       </ul>
     </li>
-    <li class="item" [ngClass]="{'has-materia': materia}">
+    <li class="item" [ngClass]="{'has-materia': filters.materia.nombre}">
       <i class="fa-solid fa-book-open-reader"></i>
-      <p *ngIf="materia" (click)="setMateria('');setMaterias(null)">{{ materia }}</p>
-      <p *ngIf="!materia">Materias</p>
+      <p *ngIf="filters.materia.nombre" (click)="setMateria('','');setMaterias(null);sendFilter('')">{{ filters.materia.nombre }}</p>
+      <p *ngIf="!filters.materia.nombre">Materias</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">
-        <li *ngFor="let materia of materias" (click)="setMateria(materia.nombre);getDocuments(materia.id,'materia')">
+        <li *ngFor="let materia of materias" (click)="setMateria(materia.id,materia.nombre);sendFilter('materia')">
           {{ materia.nombre }}
         </li>
       </ul>
     </li>
-    <li class="item" [ngClass]="{'has-category': category}">
+    <li class="item" [ngClass]="{'has-category': filters.categoria.nombre}">
       <i class="fa-solid fa-file"></i>
-      <p *ngIf="category" (click)="setCategory('')">{{ category }}</p>
-      <p *ngIf="!category">Categorias</p>
+      <p *ngIf="filters.categoria.nombre" (click)="setCategory('','');sendFilter('')">{{ filters.categoria.nombre }}</p>
+      <p *ngIf="!filters.categoria.nombre">Categorias</p>
       <i class="fa-solid fa-sort-down fa-sm"></i>
       <ul class="dropdown">
-        <li *ngFor="let categoria of categorias" (click)="setCategory(categoria.nombre);getDocuments(categoria.id,'categoria')" >
+        <li *ngFor="let categoria of categorias" (click)="setCategory(categoria.id,categoria.nombre);sendFilter('categoria')" >
           {{ categoria.nombre }}
         </li>
       </ul>

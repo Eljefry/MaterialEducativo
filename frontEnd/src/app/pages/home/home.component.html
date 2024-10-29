@@ -14,7 +14,7 @@
         <app-recientes *ngIf="Section === 'recientes'"></app-recientes>
         <ng-container  *ngIf="Section ==='paginaPrincipal'">
           <app-filter-principal (filterChanged)="onFilterChanged($event)"></app-filter-principal>
-          <app-pagina-principal [filter]="filter"></app-pagina-principal>
+          <app-pagina-principal [filters]="filters"></app-pagina-principal>
         </ng-container>
       </section>
     </section>

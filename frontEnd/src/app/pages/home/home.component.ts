@@ -7,16 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   Section:string='';
-  filter: any;
+  filters: any;
   constructor() { }
 
   ngOnInit(): void { 
      //establecer una sección por defecto al cargar la página
-     this.Section='miUnidad';
+     this.Section='paginaPrincipal';
   }
 
-  onFilterChanged(filter: any): void {
-    this.filter = filter;
+  onFilterChanged(filters: any): void {
+    this.filters = filters;
   }
 
   //metodo para actualizar la sección seleccionada
