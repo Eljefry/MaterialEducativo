@@ -28,22 +28,24 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   //cada cambio en el input filter se va ejecutando
   ngOnChanges(): void {
     //aca chequea el ultimo filtro
-    switch (this.filters?.lastFilter?.value) {
-      case "departamento":
-        this.getDocumentsDepartaments(this.filters.departamento.id);
-        break;
-      case "carrera":
-        this.getDocumentsCarrera(this.filters.carrera.id);
-        break;
-      case "materia":
-        this.getDocumentsMateria(this.filters.materia.id);
-        break;
-      case "categoria":
-        this.getDocumentsCategory(this.filters.categoria.id);
-        break;
-      default:
-        //si se envia vacio:
-        this.reestablecerTabla();
+    if(this.filters){
+      switch (this.filters.lastFilter.value) {
+        case "departamento":
+          this.getDocumentsDepartaments(this.filters.departamento.id);
+          break;
+        case "carrera":
+          this.getDocumentsCarrera(this.filters.carrera.id);
+          break;
+        case "materia":
+          this.getDocumentsMateria(this.filters.materia.id);
+          break;
+        case "categoria":
+          this.getDocumentsCategory(this.filters.categoria.id);
+          break;
+        default:
+          //si se envia vacio:
+          this.reestablecerTabla();
+      }
     }
   }
 
@@ -127,7 +129,7 @@ export class PaginaPrincipalComponent implements OnInit, OnChanges {
   //PD: el orden de los if es importante ya que tenemos que chequear de atras para adelante de estos filtros en cascada
   reestablecerTabla() {
     if (this.filters?.materia.id!='') {
-      this.getDocumentsMateria(this.filters.materia.id);
+      this.getDocumentsMateria(this.filters.materia?.id);
       return;
     }else{
 

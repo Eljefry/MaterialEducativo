@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { forkJoin, Observable, tap, throwError } from 'rxjs';
+import { forkJoin, Observable, tap, throwError,catchError } from 'rxjs';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,40 +28,37 @@ export class MaterialService {
     return this.http.get(url);
   }
   getDocumentsCarrera(idCarrera: string) {
-    const url = this.url + '/documents/carrera/' + idCarrera
+    const url = this.url + '/documents/carreras/' + idCarrera
     return this.http.get(url);
   }
   getDocumentsMateria(idMateria: string) {
-    const url = this.url + '/documents/materia/' + idMateria
+    const url = this.url + '/documents/materias/' + idMateria
     return this.http.get(url);
   }
   getDocumentsCategorys(idCategory: string) {
-    const url = this.url + '/documents/category/' + idCategory
+    const url = this.url + '/documents/categorias/' + idCategory
     return this.http.get(url);
   }
 
- 
-
   getDocumentsUser(id:string) {
-    const url = this.url + '/user_documents/'+id
+    const url = this.url + '/documents/user/'+id
     const headers = this.getHeader();
     return this.http.get(url,{headers});
   }
   getFavoritesDocuments(id:string) {
-    const url = this.url + '/favorite_documents/'+id
+    const url = this.url + '/documents/favorite/'+id
     const headers = this.getHeader();
     return this.http.get(url,{headers});
   }
 
-
   getFoldersUser(id:string) {
-    const url = this.url + '/list_user_folders/' + id
+    const url = this.url + '/folders/list_user/' + id
     const headers = this.getHeader();
     return this.http.get(url,{headers});
   }
   
   getSuggestedDocuments(id:string){
-    const url = this.url + '/documents_suggested/' + id
+    const url = this.url + '/documents/suggested/' + id
     const headers = this.getHeader();
     return this.http.get(url,{headers});
   }
@@ -71,8 +68,6 @@ export class MaterialService {
     return this.http.get(url);
   }
     
-  
-
   getCarreras(idDepto?: number) {
     let url = this.url + '/carreras';
     // Solo agregar el idDepto si está definido
@@ -96,24 +91,24 @@ export class MaterialService {
   }
 
   getFolders(id: string) {
-    const url = this.url + '/last_folders_modified/' + id
+    const url = this.url + '/folders/last_modified/' + id
     const headers = this.getHeader();
     return this.http.get(url, { headers });
   }
 
   createFolder(data: any) {
-    const url = this.url + '/create_folder/'
+    const url = this.url + '/folders/create'
     const headers = this.getHeader();
     return this.http.post(url, data, { headers });
   }
 
   updateEstado(id: string, dataState: any) {
-    const url = this.url + '/update/estado/' + id
+    const url = this.url + '/users/update/estado/' + id
     return this.http.put(url, dataState);
   }
 
   updateStateDocument(id: string, dataState: any) {
-    const url = this.url + '/update/state/' + id
+    const url = this.url + '/documents/update/state/' + id
     return this.http.put(url, dataState);
   }
 
@@ -121,7 +116,7 @@ export class MaterialService {
   //? apartado que sea por ejemplo UsuarioService
 
   registrarUsuario(formData: any): Observable<any> {//ESTO ES NUEVO, MANEJO LOS ERRORES EN EL POST
-    const url = this.url + '/registro/';
+    const url = this.url + '/users/registro';
     return this.http.post(url, formData).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
@@ -130,18 +125,18 @@ export class MaterialService {
   }
 
   getUsers() {
-    const url = this.url + '/users/';
+    const url = this.url + '/users';
     return this.http.get(url);
   }
 
   getUserProfile(id: number): Observable<any> {
-    const url = this.url + '/user_profile/' + id;
+    const url = this.url + '/users/user_profile/' + id;
     const headers = this.getHeader(); //obtengo el header
     return this.http.get(url, { headers }); //agrego el header en la peticion para la autenticacion
   }
 
   loginUser(username: string, password: string): Observable<any> {
-    const url = this.url + '/login/';
+    const url = this.url + '/users/login';
     return this.http.post<any>(url, { username, password }).pipe(tap(response => {
       if (response.access && response.refresh) {
         this.setTokens(response.access, response.refresh);

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from app.models import Departamento,Carrera,Materia,Categoria
 
-#ESTE SERIALIZADOR PARA LOS CRUDS DE DEPARTAMENTO,CARRERA Y MATERIA
+#ESTE SERIALIZADOR PARA LOS CRUDS DE DEPARTAMENTO,CARRERA,MATERIA Y CATEGORIA
 
 
 class DepartamentoSerializer(serializers.ModelSerializer):
@@ -9,16 +9,11 @@ class DepartamentoSerializer(serializers.ModelSerializer):
         model = Departamento
         fields=['id','nombre']
         
-class DepartamentoCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Departamento
-        fields=['nombre','departamento']
-        
-
+    
 class CarreraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrera
-        fields=['id','nombre']
+        fields=['id','nombre','departamento']
         
 class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
