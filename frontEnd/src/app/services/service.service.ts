@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { forkJoin, Observable, tap, throwError,catchError } from 'rxjs';
+import { forkJoin, Observable, tap, throwError, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -40,34 +40,48 @@ export class MaterialService {
     return this.http.get(url);
   }
 
-  getDocumentsUser(id:string) {
-    const url = this.url + '/documents/user/'+id
+  getDocumentsUser(id: string) {
+    const url = this.url + '/documents/user/' + id
     const headers = this.getHeader();
-    return this.http.get(url,{headers});
+    return this.http.get(url, { headers });
   }
-  getFavoritesDocuments(id:string) {
-    const url = this.url + '/documents/favorite/'+id
+  getFavoritesDocuments(id: string) {
+    const url = this.url + '/documents/favorite/' + id
     const headers = this.getHeader();
-    return this.http.get(url,{headers});
+    return this.http.get(url, { headers });
   }
 
-  getFoldersUser(id:string) {
+  getFoldersUser(id: string) {
     const url = this.url + '/folders/list_user/' + id
     const headers = this.getHeader();
-    return this.http.get(url,{headers});
+    return this.http.get(url, { headers });
   }
-  
-  getSuggestedDocuments(id:string){
+
+  getSuggestedDocuments(id: string) {
     const url = this.url + '/documents/suggested/' + id
     const headers = this.getHeader();
-    return this.http.get(url,{headers});
+    return this.http.get(url, { headers });
   }
 
   getDepartaments() {
     const url = this.url + '/departamentos'
     return this.http.get(url);
   }
-    
+
+  createDepartament(data: FormData) {
+    const url = this.url + '/departamento/create'
+    return this.http.post(url, data);
+  }
+
+  updateDepartament(id: string, data: FormData) {
+    const url = this.url + '/departamento/update/' + id
+    return this.http.put(url, data);
+  }
+  deleteDepartament(id: string) {
+    const url = this.url + '/departamento/delete/' + id
+    return this.http.delete(url);
+  }
+
   getCarreras(idDepto?: number) {
     let url = this.url + '/carreras';
     // Solo agregar el idDepto si está definido
@@ -76,6 +90,28 @@ export class MaterialService {
     }
     return this.http.get(url);
   }
+
+
+  getCarrera(id: string) {
+    let url = this.url + '/carrera/' + id;
+    return this.http.get(url);
+  }
+
+
+  createCarrera(data: FormData) {
+    const url = this.url + 'carreras/create'
+    return this.http.post(url, data);
+  }
+
+  updateCarrera(id: string, data: FormData) {
+    const url = this.url + '/carreras/update/' + id
+    return this.http.put(url, data);
+  }
+  deleteCarrera(id: string) {
+    const url = this.url + '/carreras/delete/' + id
+    return this.http.delete(url);
+  }
+
   getMaterias(idCarrera?: number) {
     let url = this.url + '/materias';
     // Solo agregar el idCarrera si está definido
@@ -85,9 +121,43 @@ export class MaterialService {
     return this.http.get(url);
   }
 
+  getMateria(id: string) {
+    let url = this.url + '/materia/' + id;
+    return this.http.get(url);
+  }
+
+  createMateria(data: FormData) {
+    const url = this.url + '/materias/create'
+    return this.http.post(url, data);
+  }
+
+  updateMateria(id: string, data: FormData) {
+    const url = this.url + '/materias/update/' + id
+    return this.http.put(url, data);
+  }
+  deleteMateria(id: string) {
+    const url = this.url + '/materias/delete/' + id
+    return this.http.delete(url);
+  }
+
+
   getCategorias() {
     const url = this.url + '/categorias'
     return this.http.get(url);
+  }
+
+  createCategoria(data: FormData) {
+    const url = this.url + '/categorias/create'
+    return this.http.post(url, data);
+  }
+
+  updateCategoria(id: string, data: FormData) {
+    const url = this.url + '/categorias/update/' + id
+    return this.http.put(url, data);
+  }
+  deleteCategoria(id: string) {
+    const url = this.url + '/categorias/delete/' + id
+    return this.http.delete(url);
   }
 
   getFolders(id: string) {
@@ -232,27 +302,27 @@ export class MaterialService {
     return this.loadUser().then(() => this.user);
   }
 
-    //--------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------
   //METODOS PARA LAS SECTIONS DEL SIDEBAR DEL HOME
 
-  PaginaPrincipalData(id:string) {
-  //combina ambas peticiones,documentos sugeridos y carpetas modificadas
-  const suggestedDocs=this.getSuggestedDocuments(id);
-  const folders=this.getFolders(id);
+  PaginaPrincipalData(id: string) {
+    //combina ambas peticiones,documentos sugeridos y carpetas modificadas
+    const suggestedDocs = this.getSuggestedDocuments(id);
+    const folders = this.getFolders(id);
 
-  return forkJoin({//me devuelve un objeto con 2 campos recien cuando ambas peticiones fueron realizadas, 
-    suggestedDocuments: suggestedDocs,//campo con la data de la primera petición
-    modifiedFolders:folders //campo con la data de la segunda petición
-   });
+    return forkJoin({//me devuelve un objeto con 2 campos recien cuando ambas peticiones fueron realizadas, 
+      suggestedDocuments: suggestedDocs,//campo con la data de la primera petición
+      modifiedFolders: folders //campo con la data de la segunda petición
+    });
   }
-  
-  miUnidad(id:string){//obtendra las carpetas y documentos del usuario
-    const userDocuments=this.getDocumentsUser(id);
-    const userFolders=this.getFoldersUser(id);
-    
+
+  miUnidad(id: string) {//obtendra las carpetas y documentos del usuario
+    const userDocuments = this.getDocumentsUser(id);
+    const userFolders = this.getFoldersUser(id);
+
     return forkJoin({
-      documents:userDocuments,
-      folders:userFolders
+      documents: userDocuments,
+      folders: userFolders
     });
   }
 }

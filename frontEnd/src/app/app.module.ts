@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RegistroComponent } from './pages/registro/registro.component'; 
+import { RegistroComponent } from './pages/registro/registro.component';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //componentes
 
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
-import { TopbarComponent } from './pages/admin-panel/components/topbar/topbar.component'; 
+import { TopbarComponent } from './pages/admin-panel/components/topbar/topbar.component';
 import { SidebarComponent } from './pages/admin-panel/components/sidebar/sidebar.component';
-import { UsersTableComponent } from './pages/admin-panel/components/users-table/users-table.component'; 
-import { DocumentsTableComponent } from './pages/admin-panel/components/documents-table/documents-table.component'; 
+import { UsersTableComponent } from './pages/admin-panel/components/users-table/users-table.component';
+import { DepartamentsTableComponent } from './pages/admin-panel/components/departaments-table/departaments-table.component';
+import { CategoryTableComponent } from './pages/admin-panel/components/category-table/category-table.component';
+import { MateriasTableComponent } from './pages/admin-panel/components/materias-table/materias-table.component';
+import { DocumentsTableComponent } from './pages/admin-panel/components/documents-table/documents-table.component';
+import { CarrerasTableComponent } from './pages/admin-panel/components/carreras-table/carreras-table.component';
+import { CarrerasDialogComponent } from './pages/admin-panel/components/carreras-table/carreras-dialog/carreras-dialog.component';
+import { MateriasDialogComponent } from './pages/admin-panel/components/materias-table/materias-dialog/materias-dialog.component';
 import { LoginComponent } from './pages/login/login.component';
 
 //home
-import { HomeComponent } from './pages/home/home.component'; 
+import { HomeComponent } from './pages/home/home.component';
 import { PaginaPrincipalComponent } from './pages/home/components/pagina-principal/pagina-principal.component';
 import { FilterPrincipalComponent } from './pages/home/components/filter-principal/filter-principal.component';
 import { SidebarComponentHome } from './pages/home/components/sidebar/sidebar.component';
@@ -32,10 +38,14 @@ import { ListViewComponentFav } from './pages/home/components/favorito/component
 import { GridViewComponentFav } from './pages/home/components/favorito/components/grid-view/grid-view.component';
 import { ListViewRecComponent } from './pages/home/components/recientes/components/list-view-rec/list-view-rec.component';
 import { GridViewRecComponent } from './pages/home/components/recientes/components/grid-view-rec/grid-view-rec.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 //componentes angular material
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,10 +56,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
+
 @NgModule({
-  
+
   declarations: [
-    
+
     AppComponent,
     HomeComponent,
     RegistroComponent,
@@ -72,7 +83,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ListViewComponentFav,
     GridViewComponentFav,
     ListViewRecComponent,
-    GridViewRecComponent
+    GridViewRecComponent,
+    DepartamentsTableComponent,
+    CategoryTableComponent,
+    MateriasTableComponent,
+    CarrerasTableComponent,
+    MateriasDialogComponent,
+    CarrerasDialogComponent
+
   ],
   imports: [
     BrowserModule,
@@ -90,6 +108,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

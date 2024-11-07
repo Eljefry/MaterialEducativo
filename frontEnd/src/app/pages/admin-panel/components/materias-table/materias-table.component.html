@@ -1,0 +1,31 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let materia of materias| paginate: { itemsPerPage: 7, currentPage: pagina }">
+      <td>{{ materia.id }}</td>
+      <td>{{ materia.nombre }}</td>
+      <td>
+        <div class="button-container-acciones">
+          <button class="btn-acciones update"  (click)="getMateria(materia.id)">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn-acciones eliminar" (click)="eliminarMateria(materia.id,materia.nombre)" >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="openDialogCreate()" >Crear Materia <i
+      class="fa-solid fa-plus"></i></button>
+</div>
+
+

@@ -1,0 +1,33 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Departamento</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let carrera of carreras| paginate: { itemsPerPage: 7, currentPage: pagina }">
+      <td>{{ carrera.id }}</td>
+      <td>{{ carrera.nombre }}</td>
+      <td>{{ carrera.departamento_nombre }}</td>
+      <td>
+        <div class="button-container-acciones">
+          <button class="btn-acciones update"  (click)="getCarrera(carrera.id)">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn-acciones eliminar" (click)="eliminarCarrera(carrera.id,carrera.nombre)" >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="openDialogCreate()" >Crear Carrera <i
+      class="fa-solid fa-plus"></i></button>
+</div>
+
+
