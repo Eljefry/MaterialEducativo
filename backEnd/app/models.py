@@ -75,13 +75,16 @@ class Categoria(models.Model):
 class CarreraMateria(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.RESTRICT, null=False)
     materia= models.ForeignKey(Materia, on_delete=models.RESTRICT, null=False)
-
+    
+class Extencion(models.Model):
+    nombre = models.CharField(max_length=50, null=False)
 
 class Documentos(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     file = models.FileField(upload_to="documents", null=False, blank=False)
     materia = models.ForeignKey(Materia, on_delete=models.RESTRICT,related_name="Materia", null=False)
     categoria= models.ForeignKey(Categoria, on_delete=models.RESTRICT,related_name="Categoria", null=False)
+    extencion= models.ForeignKey(Extencion, on_delete=models.RESTRICT,related_name="Extencion", null=False)
     owner = models.ForeignKey(
         Usuarios, on_delete=models.CASCADE, related_name="documents"
     )

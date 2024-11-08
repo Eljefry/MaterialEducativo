@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app.models import Documentos,Carpeta
+from app.models import Documentos,Carpeta,Extencion
 from app.serializers.User_serializer import *
 
 class DocumentSerializer(serializers.ModelSerializer):#sirve para la creacion de un documento
@@ -24,7 +24,7 @@ class updateState(serializers.ModelSerializer):
 class userDocuments(serializers.ModelSerializer):#este es un serialzidor generico, solo para recuper un doc para el usuario
     class Meta:
         model=Documentos
-        fields=["title", "created_at","file","owner","updated_at"]
+        fields=["title", "created_at","file","owner","updated_at","categoria","extencion"]
         
 class userDocumentsFavorito(serializers.ModelSerializer):#este es un serialzidor generico, solo para recuper un doc para el usuario
         owner_name = serializers.CharField(source='owner.username', read_only=True)    
@@ -40,6 +40,11 @@ class DocumentsHome(serializers.ModelSerializer):
     class Meta:
         model=Documentos
         fields=["title", "created_at","file","owner_name","owner_foto","categoria_id"]
+
+class Extencion_doc(serializers.ModelSerializer):
+    class Meta:
+        model=Extencion
+        fields=['id','nombre']
     
         
 
