@@ -27,12 +27,13 @@ import { RecientesComponent } from './pages/home/components/recientes/recientes.
 import { MiUnidadComponent } from './pages/home/components/mi-unidad/mi-unidad.component';
 import { ListViewComponent } from './pages/home/components/mi-unidad/components/list-view/list-view.component';
 import { GridViewComponent } from './pages/home/components/mi-unidad/components/grid-view/grid-view.component';
-import { filtersComponent } from './pages/home/components/filters/filters.component';
+import { FiltersComponent } from './pages/home/components/filters/filters.component';
 import { ListViewComponentFav } from './pages/home/components/favorito/components/list-view/list-view.component';
 import { GridViewComponentFav } from './pages/home/components/favorito/components/grid-view/grid-view.component';
 import { ListViewRecComponent } from './pages/home/components/recientes/components/list-view-rec/list-view-rec.component';
 import { GridViewRecComponent } from './pages/home/components/recientes/components/grid-view-rec/grid-view-rec.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { UserProfileModalComponent } from './pages/home/components/navbar/components/user-profile-modal/user-profile-modal.component';
 
 //componentes angular material
 import { MatListModule } from '@angular/material/list';
@@ -68,11 +69,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     RecientesComponent,
     ListViewComponent,
     GridViewComponent,
-    filtersComponent,
+    FiltersComponent,
     ListViewComponentFav,
     GridViewComponentFav,
     ListViewRecComponent,
-    GridViewRecComponent
+    GridViewRecComponent,
+    UserProfileModalComponent
   ],
   imports: [
     BrowserModule,
