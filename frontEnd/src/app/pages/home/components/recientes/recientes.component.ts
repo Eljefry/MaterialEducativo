@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { MaterialService } from 'src/app/services/service.service';
 
 //defino una interfaz para los documentos, me lo pide javascript. Sirve para indicar que tipo de datos debe manejar el javascrit
@@ -15,7 +16,6 @@ interface Document {
 })
 export class RecientesComponent implements OnInit {
   documents: Document[] = [];  //defines de tipo de la interfaz document
-  userId: string = '';  
   isListView: boolean = true; 
   selectView: string = 'list';
 
@@ -34,12 +34,15 @@ export class RecientesComponent implements OnInit {
   constructor(private materialService: MaterialService) {}
 
   ngOnInit(): void {
-    const Id = this.materialService.getUserIdToken(); 
-    if (Id) {
-      this.userId = Id.toString(); 
-      this.getData(this.userId); 
+    this.getUser();
+  }
+
+  getUser(){
+    const userId = this.materialService.getUserIdToken()?.toString(); // Usa `toString()` con paréntesis
+    if (userId) {
+      this.getData(userId);
     } else {
-      console.error('No se pudo obtener el ID del usuario.');
+      console.error("Error: No se pudo obtener el ID del usuario");
     }
   }
 
@@ -59,50 +62,74 @@ export class RecientesComponent implements OnInit {
     );
   }
 
-  // metodo para agrupar los documentos por fecha
-  groupDocuments(): void {
-    const today = new Date(); //indica la fecha de hoy
-    console.log(today);
-    this.documents.forEach((doc: Document) => {
-      const modifiedDate = new Date(doc.updated_at); //fecha de modificación del documento
 
-      //compara si el doc fue modificado hoy, si es asi lo agrega ala lista today
-      if (this.isToday(today, modifiedDate)) {
-        this.groupedDocuments.today.push(doc);
-      }
-      //compara si el doc fue modificado la semana pasada, si es asi lo agrega ala lista lastweek
-      else if (this.LastWeek(modifiedDate)) {
-        this.groupedDocuments.lastWeek.push(doc);
-      }
-      //compara si el doc fue modificado el ultimo mes, si es asi lo agrega ala lista lastmoth
-      else if (this.LastMonth(modifiedDate)) {
-        this.groupedDocuments.lastMonth.push(doc);
-      }
-      //si es mas antiguo
-      else {
-        this.groupedDocuments.older.push(doc);
-      }
-    });
-  }
+ groupDocuments(): void {
+  const today = this.setTimeToZero(new Date());//obtengo la fecha actual
+  this.documents.forEach((doc: Document) => {
+    const modifiedDate = this.setTimeToZero(new Date(doc.updated_at)); // Pone la hora en cero de la fecha del doc que se comparara
+    if (this.isToday(today,modifiedDate)) {
+      this.groupedDocuments.today.push(doc);
+    } else if (this.LastWeek(modifiedDate)) {
+      this.groupedDocuments.lastWeek.push(doc);
+    } else if (this.LastMonth(modifiedDate)) {
+      this.groupedDocuments.lastMonth.push(doc);
+    } else {
+      this.groupedDocuments.older.push(doc);
+    }
+  });
+}
+//establece la hora de un objeto date a 0
+setTimeToZero(date: Date): Date {
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
 
-  //compara si las dos fechas son el mismo día
-  isToday(date1: Date, date2: Date): boolean {
-    const date=new Date(date1).toISOString().split('T')[0];
-    const Mdate=new Date(date2).toISOString().split('T')[0];
-    return date === Mdate;
-  }
+isToday(date1: Date, date2: Date): boolean {
+  return date1.getTime() === date2.getTime();
+}
 
-  //verifica si la fecha está dentro de la ultima semana
-  LastWeek(date: Date): boolean {
-    const today = new Date();
-    const lastWeek = new Date(today.setDate(today.getDate() - 7));
-    return date >= lastWeek && !this.isToday(new Date(), date);
-  }
+LastWeek(date: Date): boolean {
+  const today = this.setTimeToZero(new Date());
+  const lastWeek = new Date(today);
+  lastWeek.setDate(today.getDate() - 7);
+  return date >= lastWeek && date < today;
+}
 
-  //verifica si la fecha está dentro del ultimo mes
-  LastMonth(date: Date): boolean {
-    const today = new Date();
-    const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-    return date >= lastMonth && !this.LastWeek(date);
-  }
+LastMonth(date: Date): boolean {
+  const today = this.setTimeToZero(new Date());
+  const lastMonth = new Date(today);
+  lastMonth.setMonth(today.getMonth() - 1);
+  return date >= lastMonth && date < this.setTimeToZero(new Date(today.setDate(today.getDate() - 7)));
+}
+
+
+resetData(){
+  this.documents=[];
+  this.groupedDocuments = {
+    today: [],
+    lastWeek: [],
+    lastMonth: [],
+    older: []
+  };
+}
+
+resetComponent(){
+  this.resetData();
+  this.getUser();
+}
+
+onFiltersChanged(filters: any) {
+  const section='general';
+  const filters_Section = { ...filters, section };
+  this.applyFilters(filters_Section);
+}
+
+applyFilters(filters: any): void {
+  this.resetData();
+  this.materialService.getDocumentsFilters(filters).subscribe((data: any) => {
+    this.documents = data;
+    this.groupDocuments();
+    console.log('data=',this.documents);
+  });
+}
 }

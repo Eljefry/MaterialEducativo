@@ -18,7 +18,7 @@
   </section>
 
   <section class="filter-container">
-    <app-Filters></app-Filters>
+    <app-Filters (filtersChanged)="onFiltersChanged($event)" (filtersReset)="resetComponent()"></app-Filters>
   </section>
 
   <app-list-view-rec *ngIf="isListView" [groupedDocuments]="groupedDocuments"></app-list-view-rec>
