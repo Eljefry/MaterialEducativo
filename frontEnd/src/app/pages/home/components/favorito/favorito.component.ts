@@ -13,13 +13,7 @@ export class FavoritoComponent implements OnInit {
   constructor(private materialService: MaterialService) { }
 
   ngOnInit():void{
-    const Id = this.materialService.getUserIdToken();
-    if (Id) {
-      this.userId = Id.toString();
-      this.getData(this.userId);
-    } else {
-      console.error('No se pudo obtener el id del usuario.');
-    }
+   this.getUser();
   }
 
  //metodo para cambiar la vista de como se ven los documents y folders
@@ -28,6 +22,14 @@ export class FavoritoComponent implements OnInit {
   this.isListView = (view === 'list');
 }
 
+getUser(){
+  const userId = this.materialService.getUserIdToken()?.toString(); // Usa `toString()` con paréntesis
+  if (userId) {
+    this.getData(userId);
+  } else {
+    console.error("Error: No se pudo obtener el ID del usuario");
+  }
+}
 
 getData(userId: string): void {
   this.materialService.getFavoritesDocuments(userId).subscribe(
@@ -40,5 +42,28 @@ getData(userId: string): void {
       console.error('Error al obtener documentos favoritos:', error);
     }
   );
+}
+
+resetData(){
+  this.documents=[];
+}
+
+resetComponent(){//se ejecuta cuando se escucha un evento de reinicio del componente filters
+  this.resetData();
+  this.getUser();
+}
+
+onFiltersChanged(filters: any) {
+  const section='favoritos';
+  const filters_Section = { ...filters, section };
+  this.applyFilters(filters_Section);
+}
+
+applyFilters(filters: any): void {
+  this.resetData();
+  this.materialService.getDocumentsFilters(filters).subscribe((data: any) => {
+    this.documents = data;
+    console.log('data=',this.documents);
+  });
 }
 }
