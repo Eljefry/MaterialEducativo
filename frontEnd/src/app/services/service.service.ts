@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { forkJoin, Observable, tap, throwError,catchError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { forkJoin, Observable, tap, throwError,catchError, filter } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -39,7 +39,39 @@ export class MaterialService {
     const url = this.url + '/documents/categorias/' + idCategory
     return this.http.get(url);
   }
+  
+  //me trae todos los tipos de documentos que se manejan, ej. pdf, word,etc
+  getDocumentsTypes(){
+    const url = this.url + '/document/types_documents/'
+    return this.http.get(url);
+  }
 
+  getDocumentsFilters(filters:any):Observable<any>{
+    const url = this.url + '/document/filters/'
+    const headers = this.getHeader();
+    let parametros = new HttpParams();//este objeto contendra los parametros de consulta que ingreso, osea los filtros
+    if (filters.fileType) parametros = parametros.set('file_type', filters.fileType);
+    if (filters.category) parametros = parametros.set('category', filters.category);
+    if (filters.afterdate) parametros = parametros.set('afterdate', filters.afterdate);
+    if (filters.beforedate) parametros = parametros.set('beforedate', filters.beforedate);
+    if (filters.modifiedDate) parametros = parametros.set('modifieddate', filters.modifiedDate);
+    if (filters.section) parametros = parametros.set('section', filters.section);//este parametro indica al front que section esta piendo datos, si es favoritos el back solo filtrara de favoritos
+
+    return this.http.get(url,{headers, params: parametros});
+  }
+
+  getFoldersFilters(filters: any): Observable<any> {
+    const url = this.url + '/folder/filters/';
+    const headers = this.getHeader();
+    let parametros = new HttpParams();
+    if (filters.fileType) parametros = parametros.set('file_type', filters.fileType);
+    if (filters.category) parametros = parametros.set('category', filters.category);
+    if (filters.afterdate) parametros = parametros.set('afterdate', filters.afterdate);
+    if (filters.beforedate) parametros = parametros.set('beforedate', filters.beforedate);
+    if (filters.modifiedDate) parametros = parametros.set('modifieddate', filters.modifiedDate);
+
+    return this.http.get(url, { headers, params: parametros });
+  }
   getDocumentsUser(id:string) {
     const url = this.url + '/documents/user/'+id
     const headers = this.getHeader();
