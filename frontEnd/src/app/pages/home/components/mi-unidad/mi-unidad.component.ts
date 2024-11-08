@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { MaterialService } from 'src/app/services/service.service'; 
 
 @Component({
@@ -8,21 +9,14 @@ import { MaterialService } from 'src/app/services/service.service';
 })
 export class MiUnidadComponent implements OnInit {
   documents: any[] = [];  
-  foldersData: any[] = [];  
-  userId: string = '';  
+  foldersData: any[] = []; 
   isListView: boolean = true; //por defecto en vista lista
   selectView: string = 'list'; //mantiene el botón activo
 
   constructor(private materialService: MaterialService) { }
 
   ngOnInit():void{
-    const Id = this.materialService.getUserIdToken(); //obtiene el id del usuario desde el token
-    if (Id) {
-      this.userId = Id.toString();  //asigna el ID del usuario
-      this.getData(this.userId);//llamo al getData para que la info se cargue al instante
-    } else {
-      console.error('No se pudo obtener el ID del usuario.');
-    }
+    this.getUser();
   }
 
   //metodo para cambiar la vista de como se ven los documents y folders
@@ -31,21 +25,61 @@ export class MiUnidadComponent implements OnInit {
     this.isListView = (view === 'list');
   }
 
-  getData(userId:string): void {
-    this.materialService.miUnidad(this.userId).subscribe((data: any) => {
-      this.documents = data.documents;
-      this.foldersData = data.folders;
+  getUser(){
+    const userId = this.materialService.getUserIdToken()?.toString(); // Usa `toString()` con paréntesis
+    if (userId) {
+      this.getData(userId);
+    } else {
+      console.error("Error: No se pudo obtener el ID del usuario");
+    }
+  }
+
+  getData(userId: string): void {
+    this.materialService.miUnidad(userId).subscribe({
+      next: (data: any) => {
+        this.documents = data.documents;
+        this.foldersData = data.folders;
+      },
+      error: (error) => {
+        console.error("Error al obtener datos:", error);
+      }
     });
+  }
+
+  resetData(){
+    this.documents=[];
+    this.foldersData=[];
+  }
+
+  resetComponent(){//se ejecuta cuando se escucha un evento de reinicio del componente filters
+    this.resetData();
+    this.getUser();
   }
   
   //METODOS PARA EL FILTRADO
   onFiltersChanged(filters: any) {
-    this.applyFilters(filters);
+    const section='general';
+    const filters_Section = { ...filters, section };
+    this.applyFilters(filters_Section);
   }
 
-  applyFilters(filters:string) {
-   
-    };
+  applyFilters(filters: any): void {
+    this.resetData();
+    //forkJoin me permite ejecutar ambas solicitudes en paralelo
+    forkJoin({
+      documents: this.materialService.getDocumentsFilters(filters),
+      folders: this.materialService.getFoldersFilters(filters)
+    }).subscribe({
+      next: (result) => {
+        // Asigna los resultados una vez que ambas solicitudes han finalizado
+        this.documents = result.documents;
+        this.foldersData = result.folders;
+      },
+      error: (error) => {
+        console.error('Error al aplicar filtros:', error);
+      }
+    });
+  }
 }
 
 
