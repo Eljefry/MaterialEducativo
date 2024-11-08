@@ -13,4 +13,7 @@ urlpatterns = [
     path('documents/favorite/<int:pk>',UserFavoritesDocuments.as_view()),
     path('documents/user/<int:pk>', UserDocuments.as_view()),
     path('document/<int:pk>',GetDocument.as_view()),
+    path('document/types_documents/',GetExtentionsDocs.as_view()),
+    path('document/filters/',GetDocumentsFilters.as_view()),
+
 ]

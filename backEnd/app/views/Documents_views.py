@@ -1,9 +1,12 @@
+from datetime import datetime, timedelta
+from django.utils import timezone  
+from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from app.serializers.Documents_serializer import *
-from app.models import Documentos,Comentario,Favorito,Interaccion,Carrera,Materia,CarreraMateria
+from app.models import Documentos,Comentario,Favorito,Interaccion,Carrera,Materia,CarreraMateria,Extencion
 from rest_framework.permissions import IsAuthenticated
-
+from django.utils.dateparse import parse_date
 
 class CreateDocument(generics.CreateAPIView):
     serializer_class=DocumentSerializer
@@ -147,6 +150,53 @@ class GetDocumentsCategory(generics.ListAPIView):
         documentos = Documentos.objects.filter(categoria_id=idCategory)
         return documentos
     
+class GetExtentionsDocs(generics.ListAPIView):
+    queryset=Extencion.objects.all()
+    serializer_class=Extencion_doc
+    
+    
+#este controlador recibe varios filtros o solo 1 atravez de la solicitud, es usado por el filtro que comparten las section del sidebar del home(excepto por pagina principal)
+class GetDocumentsFilters(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = userDocuments
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        section = self.request.query_params.get('section')
+        if section == 'favoritos': # Determina si se filtran favoritos o documentos del usuario
+            queryset = Documentos.objects.filter(favorito__usuario_id=user_id) # Filtra solo los documentos que están en favoritos del usuario
+        else: 
+            queryset = Documentos.objects.filter(owner_id=user_id)# Filtra todos los documentos del usuario
+        #obtengo los parametros
+        file_type = self.request.query_params.get('file_type')
+        category = self.request.query_params.get('category')
+        modified_date=self.request.query_params.get('modifieddate')
+        after_date = self.request.query_params.get('afterdate')
+        before_date=self.request.query_params.get('beforedate')
+        
+        if file_type:
+            queryset = queryset.filter(extencion__nombre=file_type)
+        #filtra por categoria entre los docs que ya tiene queryset, si no encuentra ninguna coincidencia de categoria devuelve un query vacio
+        if category:
+            queryset = queryset.filter(categoria__nombre=category)
+        if modified_date:
+            if modified_date == 'hoy':
+                   today = timezone.localdate()   # Obtiene la fecha de hoy
+                   queryset = queryset.filter(updated_at=today)  # Compara solo la fecha
+            elif modified_date == '7days':
+                # Obtener la fecha de hace 7 días y filtrar a partir de ahí
+                start_date = now().date() - timedelta(days=7)  # Esto sigue siendo correcto.
+                queryset = queryset.filter(updated_at__gte=start_date)  # Esto es correcto.
+            elif modified_date == '30days':
+                # Obtener la fecha de hace 30 días y filtrar a partir de ahí
+                start_date = now().date() - timedelta(days=30)  # Esto sigue siendo correcto.
+                queryset = queryset.filter(updated_at__gte=start_date)  # Esto es correcto.          
+        if after_date and before_date:
+            after_date_parsed = parse_date(after_date)
+            before_date_parsed = parse_date(before_date)
+            if after_date_parsed and before_date_parsed:
+                queryset = queryset.filter(updated_at__gte=after_date_parsed, updated_at__lte=before_date_parsed)
+        return queryset
 
 
     

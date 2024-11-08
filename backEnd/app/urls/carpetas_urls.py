@@ -6,4 +6,5 @@ urlpatterns = [
    path('folders/list_user/<int:pk>',UserFolders.as_view()),
    path('folders/create',CreateFolder.as_view()),
    path('folders/<int:pk>',UserFolders.as_view()),
+   path('folder/filters/',FolderModificFilter.as_view()),
 ]
