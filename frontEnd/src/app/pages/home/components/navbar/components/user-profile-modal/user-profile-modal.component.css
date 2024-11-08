@@ -1,0 +1,49 @@
+.user-profile-modal {
+  position: absolute;
+  top: 60px; /* Ajuste para situarlo debajo del ícono */
+  right: 0;
+  width: 300px; /* Ampliamos el ancho */
+  padding: 20px;
+  background-color: #e4e1e1;
+  border-radius: 10px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Icono grande en el modal */
+.user-icon-large i {
+  font-size: 60px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los botones en fila */
+.field.has-addons {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.control {
+  flex: 1; /* Ambos botones ocupan el mismo espacio */
+}
+
+.button {
+  width: 100%;
+  height: 48px; /* Altura uniforme */
+  border-radius: 21px; /* Bordes redondeados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 0.5px solid black; /* Bordes negros */
+  color: #333;
+
+}
+
+.button .icon {
+  margin-right: 8px;
+}

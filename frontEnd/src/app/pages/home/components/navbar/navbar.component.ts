@@ -1,19 +1,32 @@
-import { Component,OnInit } from '@angular/core';
+// navbar.component.ts
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MaterialService } from 'src/app/services/service.service';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-h',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private _Materialservice: MaterialService,private router:Router){}
-  ngOnInit(): void {}
+  isUserProfileOpen = false;
+  User: any[] = [];
 
-  Logout():void{
-    this._Materialservice.logout();}
-    
-  Login():void{
-    this.router.navigate(['/login']);
+  constructor(private _Materialservice: MaterialService) {}
+
+  ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    this._Materialservice.getUser().then(usuario => {
+      if (usuario) {
+        this.User=usuario;
+      }
+    }).catch(error => {
+      console.error('Error al obtener el usuario', error);
+    });
+  }
+
+  toggleUserProfile() {
+    this.isUserProfileOpen = !this.isUserProfileOpen;
   }
 }
