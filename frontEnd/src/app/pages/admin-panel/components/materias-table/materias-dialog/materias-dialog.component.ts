@@ -13,7 +13,7 @@ export class MateriasDialogComponent implements OnInit {
 
   nombre: string = '';
   carreras: any;
-  selectedCarreras: any;
+  selectedCarreras: any[] = [];
 
   constructor(public dialogRef: MatDialogRef<CategoryTableComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,6 +33,10 @@ export class MateriasDialogComponent implements OnInit {
     }
   }
 
+  compareCarreras(carrera1: any, carrera2: any) {
+    return carrera1 && carrera2 ? carrera1.id === carrera2.id : carrera1 === carrera2;
+  }
+
   setNombre(nombre: string) {
     this.nombre = nombre;
   }
@@ -47,9 +51,6 @@ export class MateriasDialogComponent implements OnInit {
     })
   }
 
-  updateSelectedCarreras() {
-    // Esta función se llama cada vez que se selecciona un elemento en el mat-select
-  }
 
   onCancel(): void {
     this.dialogRef.close();

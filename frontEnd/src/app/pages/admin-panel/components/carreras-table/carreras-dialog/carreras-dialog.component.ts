@@ -11,41 +11,42 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
 })
 export class CarrerasDialogComponent implements OnInit {
   nombre: string = '';
-  departamentos: any=null;
-  selectedDepto: any=null;
+  departamentos: any = null;
+  selectedDepto: any = null;
 
   constructor(public dialogRef: MatDialogRef<CategoryTableComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _materialService: MaterialService,
     private _alertService: AlertService) { }
 
   ngOnInit() {
     this.inicializarProps();
-    this.getDepartamentos();
+  }
+
+  // Función de comparación para `[compareWith]`  Angular usará esta función cada vez que necesite verificar si el valor de selectedDepto coincide con alguna opción en departamentos.
+  compareDepartments(depto1: any, depto2: any) {
+    return depto1 && depto2 ? depto1.id === depto2.id : depto1 === depto2;
   }
 
   inicializarProps() {
     if (this.data?.carrera) {
       this.setNombre(this.data.carrera.nombre);
-      this.setSelectedDepto(this.data.carrera.departamento_nombre);
+      this.setSelectedDepto()
+    }
+    if (this.data?.departamentos) {
+      this.setDepartamentos();
     }
   }
 
   setNombre(nombre: string) {
     this.nombre = nombre;
   }
-  setSelectedDepto(departamento: string) {
+  setSelectedDepto() {
+    const departamento = { "id": this.data.carrera.departamento, "nombre": this.data.carrera.departamento_nombre }
     this.selectedDepto = departamento;
   }
 
-  getDepartamentos() {
-    this._materialService.getDepartaments().subscribe({
-      next: (response) => { this.departamentos = response; },
-      error: () => this._alertService.error('Respuesta fallida')
-    })
-  }
-
-  updateSelectedDepto() {
+  setDepartamentos() {
+    this.departamentos = this.data.departamentos;
   }
 
   onCancel(): void {
@@ -53,8 +54,12 @@ export class CarrerasDialogComponent implements OnInit {
   }
 
   onConfirm(): void {
-    console.log("depto",this.selectedDepto.id);
-    this.dialogRef.close({ nombre: this.nombre, selectedDepto: this.selectedDepto.id});
+    console.log(this.selectedDepto)
+    if (this.nombre && this.selectedDepto) {
+      this.dialogRef.close({ nombre: this.nombre, selectedDepto: this.selectedDepto.id });
+    } else {
+      this._alertService.error('Por favor, completa todos los campos obligatorios.');
+    }
   }
 
 }

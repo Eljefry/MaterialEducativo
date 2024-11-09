@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,OnChanges, SimpleChanges } from '@angular/core';
 import { CarrerasDialogComponent } from './carreras-dialog/carreras-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialService } from 'src/app/services/service.service';
@@ -9,9 +9,11 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
   templateUrl: './carreras-table.component.html',
   styleUrls: ['./carreras-table.component.css']
 })
-export class CarrerasTableComponent implements OnInit {
+export class CarrerasTableComponent implements OnInit,OnChanges {
   @Input() state: string = '';
+  departamentos:any;
   carreras: any;
+  filteredCarreras:any;
   carrera: any
   pagina = 1;
 
@@ -19,6 +21,18 @@ export class CarrerasTableComponent implements OnInit {
 
   ngOnInit() {
     this.getCarreras();
+    this.getDepartamentos();
+  }
+
+  ngOnChanges(): void {
+    
+  }
+
+  getDepartamentos() {
+    this._materialService.getDepartaments().subscribe({
+      next: (response) => { this.departamentos = response; },
+      error: () => this._alertService.error('Respuesta fallida')
+    })
   }
 
   getCarreras() {
@@ -38,6 +52,9 @@ export class CarrerasTableComponent implements OnInit {
   openDialogCreate(): void {
     const dialogRef = this.dialog.open(CarrerasDialogComponent, {
       width: '600px',
+      data:{
+        departamentos: this.departamentos
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -57,7 +74,8 @@ export class CarrerasTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CarrerasDialogComponent, {
       width: '600px',
       data: {
-        carrera: this.carrera
+        carrera: this.carrera,
+        departamentos: this.departamentos
       }
     });
 
@@ -74,13 +92,13 @@ export class CarrerasTableComponent implements OnInit {
 
   crearCarrera(data: any) {
     this._materialService.createCarrera(data).subscribe({
-      next: (response) => { console.log(response); this._alertService.success("¡Carrera Creada!");; this.getCarreras(); },
+      next: (response) => { console.log(response); this._alertService.success("¡Carrera Creada!"); this.getCarreras(); },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }
   updateCarrera(data: any) {
     this._materialService.updateCarrera(this.carrera.id, data).subscribe({
-      next: (response) => { console.log(response); this._alertService.success("¡Carrera actualizada!");; this.getCarreras(); },
+      next: (response) => { console.log(response); this._alertService.success("¡Carrera actualizada!"); this.getCarreras(); },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }
@@ -88,7 +106,7 @@ export class CarrerasTableComponent implements OnInit {
   async eliminarCarrera(id: string, name: string) {
     const accion = 'eliminar';
     try {
-      const result = await this._alertService.confirmed("¿Está seguro/a de " + accion + " la materia " + name, "Esto es irreversible");
+      const result = await this._alertService.confirmed("¿Está seguro/a de " + accion + " la carrera " + name, "Esto es irreversible");
       if (result.isConfirmed) {
         this._materialService.deleteCarrera(id).subscribe({
           next: () => {
