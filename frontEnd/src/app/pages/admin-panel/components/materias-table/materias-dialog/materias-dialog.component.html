@@ -4,28 +4,30 @@
   <mat-dialog-content class="dialog-content">
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Escribe tu nombre" [(ngModel)]="nombre">
+      <input matInput placeholder="Escribe tu nombre" [(ngModel)]="nombre" required>
+      <mat-error *ngIf="!nombre">El campo nombre es obligatorio.</mat-error>
     </mat-form-field>
 
     <div class="selection-container">
       <mat-form-field appearance="fill" class="select-field">
         <mat-label>Selecciona Carrera</mat-label>
-        <mat-select [(ngModel)]="selectedCarreras" (selectionChange)="updateSelectedCarreras()" multiple >
+        <mat-select [(ngModel)]="selectedCarreras" [compareWith]="compareCarreras" multiple required=>
           <mat-option *ngFor="let carrera of carreras" [value]="carrera" >
             {{ carrera.nombre }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="!selectedCarreras?.length">Las carreras son obligatorias.</mat-error>
       </mat-form-field>
 
       <div class="selected-items">
-        <p *ngFor="let carrera of selectedCarreras">{{ carrera.nombre }}</p>
+        <p *ngFor="let carrera of selectedCarreras">- {{ carrera.nombre }}</p>
       </div>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-button color="primary" (click)="onConfirm()">Confirmar</button>
+    <button mat-button color="primary" (click)="onConfirm()" [disabled]="!nombre || !selectedCarreras">Confirmar</button>
   </mat-dialog-actions>
 
 </div>

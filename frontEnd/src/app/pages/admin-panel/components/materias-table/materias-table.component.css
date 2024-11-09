@@ -40,19 +40,11 @@ table tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.btn-acciones.create {
-    background-color: #4CAF50;
-}
-
 .btn-acciones.update {
     background-color: #74C0FC;
 }
 .btn-acciones.eliminar {
     background-color: #c71e1e;
-}
-
-.btn-acciones.create:hover {
-    background-color: #45a049;
 }
 
 .btn-acciones.update:hover {

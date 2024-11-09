@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let carrera of carreras| paginate: { itemsPerPage: 7, currentPage: pagina }">
+    <tr *ngFor="let carrera of carreras| paginate: { itemsPerPage: 8, currentPage: pagina }">
       <td>{{ carrera.id }}</td>
       <td>{{ carrera.nombre }}</td>
       <td>{{ carrera.departamento_nombre }}</td>
@@ -26,8 +26,13 @@
   </tbody>
 </table>
 <div class="button-container">
-  <button mat-raised-button color="primary" (click)="openDialogCreate()" >Crear Carrera <i
+  <button mat-raised-button color="primary" style="background-color: #4CAF50;" (click)="openDialogCreate()" >Crear Carrera <i
       class="fa-solid fa-plus"></i></button>
 </div>
+
+
+<div class="paginador">
+  <pagination-controls (pageChange)="pagina=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+</div>  
 
 
