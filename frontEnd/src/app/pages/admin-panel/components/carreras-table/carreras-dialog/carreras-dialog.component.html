@@ -4,14 +4,14 @@
   <mat-dialog-content class="dialog-content">
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Escribe el nombre" [(ngModel)]="nombre">
+      <input matInput placeholder="Escribe el nombre" [(ngModel)]="nombre" required="nombre">
     </mat-form-field>
 
     <div class="selection-container">
       <mat-form-field appearance="fill" class="select-field">
-        <mat-label>Selecciona Carrera</mat-label>
-        <mat-select [(ngModel)]="selectedDepto" (selectionChange)="updateSelectedDepto()">
-          <mat-option *ngFor="let departamento of departamentos" [value]="departamento" >
+        <mat-label>Selecciona Departamento</mat-label>
+        <mat-select [(ngModel)]="selectedDepto" (selectionChange)="updateSelectedDepto()" required="selectedDepto">
+          <mat-option *ngFor="let departamento of departamentos" [value]="departamento">
             {{ departamento.nombre }}
           </mat-option>
         </mat-select>

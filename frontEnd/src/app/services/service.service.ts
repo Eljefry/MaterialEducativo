@@ -99,7 +99,7 @@ export class MaterialService {
 
 
   createCarrera(data: FormData) {
-    const url = this.url + 'carreras/create'
+    const url = this.url + '/carreras/create'
     return this.http.post(url, data);
   }
 

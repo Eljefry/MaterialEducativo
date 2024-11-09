@@ -44,7 +44,7 @@ export class CarrerasTableComponent implements OnInit {
       if (result) {
         const data = {
           "nombre": result.nombre,
-          "departamento": result.departamento
+          "departamento": result.selectedDepto
         }
         this.crearCarrera(data);
       }
@@ -57,7 +57,7 @@ export class CarrerasTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CarrerasDialogComponent, {
       width: '600px',
       data: {
-        materia: this.carrera
+        carrera: this.carrera
       }
     });
 

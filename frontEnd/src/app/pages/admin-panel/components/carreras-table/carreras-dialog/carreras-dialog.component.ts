@@ -11,8 +11,8 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
 })
 export class CarrerasDialogComponent implements OnInit {
   nombre: string = '';
-  departamentos: any;
-  selectedDepto: any;
+  departamentos: any=null;
+  selectedDepto: any=null;
 
   constructor(public dialogRef: MatDialogRef<CategoryTableComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,17 +25,17 @@ export class CarrerasDialogComponent implements OnInit {
   }
 
   inicializarProps() {
-    if (this.data?.materia) {
+    if (this.data?.carrera) {
       this.setNombre(this.data.carrera.nombre);
-      this.setSelectedDepto(this.data.carrera.departamento);
+      this.setSelectedDepto(this.data.carrera.departamento_nombre);
     }
   }
 
   setNombre(nombre: string) {
     this.nombre = nombre;
   }
-  setSelectedDepto(departamentos: any) {
-    this.selectedDepto = departamentos;
+  setSelectedDepto(departamento: string) {
+    this.selectedDepto = departamento;
   }
 
   getDepartamentos() {
