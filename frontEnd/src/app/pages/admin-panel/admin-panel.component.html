@@ -1,18 +1,29 @@
 
-<section class="columns is-gapless">
-  <section class="column is-one-fifth">
+<div class="admin-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
     <app-sidebar (tableSelectionChange)="onTableSelectionChange($event)"></app-sidebar>
-  </section>
-  <section class="column">
-    <section class="box">
-      <app-topbar  (filterChanged)="onFilterChanged($event)" [table]="table"></app-topbar>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Topbar -->
+    <section class="topbar">
+      <app-topbar (filterChanged)="onFilterChanged($event)" [table]="table"></app-topbar>
     </section>
-    <section class="box">
+
+    <!-- Content Box -->
+    <section class="content-box">
       <ng-container [ngSwitch]="table">
-        <app-users-table *ngSwitchCase="'Usuarios'" [state]="state"  ></app-users-table>
+        <app-users-table *ngSwitchCase="'Usuarios'" [state]="state"></app-users-table>
         <app-documents-table *ngSwitchCase="'Documentos'" [state]="state"></app-documents-table>
+        <app-departaments-table *ngSwitchCase="'Departamentos'" [state]="state"></app-departaments-table>
+        <app-carreras-table *ngSwitchCase="'Carreras'" [state]="state"></app-carreras-table>
+        <app-materias-table *ngSwitchCase="'Materias'" [state]="state"></app-materias-table>
+        <app-category-table *ngSwitchCase="'Categorias'" [state]="state"> </app-category-table>
         <section *ngSwitchDefault>Seleccione una tabla para visualizar</section>
       </ng-container>
     </section>
-  </section>
-</section>
+  </main>
+</div>
+

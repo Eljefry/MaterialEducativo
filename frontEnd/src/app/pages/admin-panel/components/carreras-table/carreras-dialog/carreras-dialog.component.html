@@ -1,0 +1,28 @@
+<div>
+  <h2 mat-dialog-title>Detalle</h2>
+
+  <mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Escribe el nombre" [(ngModel)]="nombre" required>
+      <mat-error *ngIf="!nombre">El campo nombre es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <div class="selection-container">
+      <mat-form-field appearance="fill" class="select-field">
+        <mat-label>Selecciona Departamento</mat-label>
+        <mat-select [(ngModel)]="selectedDepto" [compareWith]="compareDepartments" required>
+          <mat-option *ngFor="let departamento of departamentos" [value]="departamento">
+            {{ departamento.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!selectedDepto">El campo departamento es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button color="primary" (click)="onConfirm()" [disabled]="!nombre || !selectedDepto">Confirmar</button>
+  </mat-dialog-actions>
+</div>

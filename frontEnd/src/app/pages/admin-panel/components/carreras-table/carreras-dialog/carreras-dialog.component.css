@@ -1,0 +1,23 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .selection-container {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+  }
+  
+  .select-field {
+    flex: 1;
+  }
+  
+  .selected-items {
+    padding: 0.5rem;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    min-width: 150px;
+  }
+  

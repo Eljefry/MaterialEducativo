@@ -1,0 +1,62 @@
+/* Contenedor principal que organiza el sidebar y el contenido */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 20%; /* Ajusta el ancho según lo necesites */
+    background-color: #f4f4f4;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenido principal */
+  .main-content {
+    width: 80%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Barra superior */
+  .topbar {
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+  }
+  
+  /* Caja de contenido */
+  .content-box {
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    overflow: auto;
+  }
+  
+  /* Tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table thead th {
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  
+  table tbody td {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  
+  
