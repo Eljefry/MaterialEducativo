@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,OnChanges, SimpleChanges} from '@angular/core';
 import { MaterialService } from 'src/app/services/service.service';
 import { AlertService } from 'src/app/services/alertas/alert.service';
 
@@ -8,10 +8,11 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
   templateUrl: './departaments-table.component.html',
   styleUrls: ['./departaments-table.component.css']
 })
-export class DepartamentsTableComponent implements OnInit {
+export class DepartamentsTableComponent implements OnInit,OnChanges {
 
   @Input() state: string = '';
   departaments: any;
+  filteredDepartaments:any
   pagina = 1;
 
   constructor(private _materialService: MaterialService, private _alertService: AlertService) { }
@@ -20,9 +21,21 @@ export class DepartamentsTableComponent implements OnInit {
     this.getDepartaments();
   }
 
+  ngOnChanges(): void {
+    if (this.state) {
+      const filtroLowerCase = this.state.toLocaleLowerCase();
+      this.filteredDepartaments = this.departaments.filter((depto: any) => {
+        const nombreDepartamento = depto.nombre.toLocaleLowerCase();
+        return nombreDepartamento.includes(filtroLowerCase)
+      });
+    } else {
+      this.filteredDepartaments = this.departaments;
+    }
+  }
+
   getDepartaments() {
     this._materialService.getDepartaments().subscribe({
-      next: (response) => { this.departaments = response; },
+      next: (response) => { this.departaments = response; this.filteredDepartaments=response },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }

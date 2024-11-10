@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MaterialService } from 'src/app/services/service.service';
 import { AlertService } from 'src/app/services/alertas/alert.service';
 
@@ -10,10 +10,11 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
   templateUrl: './category-table.component.html',
   styleUrls: ['./category-table.component.css']
 })
-export class CategoryTableComponent implements OnInit {
+export class CategoryTableComponent implements OnInit, OnChanges {
 
   @Input() state: string = '';
   categories: any;
+  filteredCategories: any
   pagina = 1;
 
   constructor(private _materialService: MaterialService, private _alertService: AlertService) { }
@@ -21,10 +22,21 @@ export class CategoryTableComponent implements OnInit {
   ngOnInit() {
     this.getCategories();
   }
+  ngOnChanges(): void {
+    if (this.state) {
+      const filtroLowerCase = this.state.toLocaleLowerCase();
+      this.filteredCategories = this.categories.filter((categoria: any) => {
+        const nombreCategoria = categoria.nombre.toLocaleLowerCase();
+        return nombreCategoria.includes(filtroLowerCase)
+      });
+    } else {
+      this.filteredCategories = this.categories;
+    }
+  }
 
   getCategories() {
     this._materialService.getCategorias().subscribe({
-      next: (response) => { this.categories = response; },
+      next: (response) => { this.categories = response; this.filteredCategories=response },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }

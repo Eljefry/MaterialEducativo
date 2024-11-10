@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MateriasDialogComponent } from './materias-dialog/materias-dialog.component';
 import { MaterialService } from 'src/app/services/service.service';
@@ -9,11 +9,13 @@ import { AlertService } from 'src/app/services/alertas/alert.service';
   templateUrl: './materias-table.component.html',
   styleUrls: ['./materias-table.component.css']
 })
-export class MateriasTableComponent implements OnInit {
+export class MateriasTableComponent implements OnInit, OnChanges {
   @Input() state: string = '';
   materias: any;
+  filteredMaterias: any;
   materia: any
   pagina = 1;
+
 
   constructor(public dialog: MatDialog, private _materialService: MaterialService, private _alertService: AlertService) { }
 
@@ -23,16 +25,30 @@ export class MateriasTableComponent implements OnInit {
     this.getMaterias();
   }
 
+
+  ngOnChanges() {
+    if (this.state) {
+      const filtroLowerCase = this.state.toLocaleLowerCase();
+      this.filteredMaterias = this.materias.filter((materia: any) => {
+        const nombreMateria = materia.nombre.toLocaleLowerCase();
+        return nombreMateria.includes(filtroLowerCase)
+      });
+    } else {
+      this.filteredMaterias = this.materias;
+    }
+
+  }
+
   getMaterias() {
     this._materialService.getMaterias().subscribe({
-      next: (response) => { this.materias = response },
+      next: (response) => { this.materias = response; this.filteredMaterias = response },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }
 
   getMateria(id: string) {
     this._materialService.getMateria(id).subscribe({
-      next: (response) => { this.materia = response;this.openDialogUpdate() },
+      next: (response) => { this.materia = response; this.openDialogUpdate() },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }

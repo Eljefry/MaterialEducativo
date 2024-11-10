@@ -25,7 +25,15 @@ export class CarrerasTableComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(): void {
-    
+    if (this.state) {
+      const filtroLowerCase = this.state.toLocaleLowerCase();
+      this.filteredCarreras = this.carreras.filter((carrera: any) => {
+        const nombreCarrera = carrera.nombre.toLocaleLowerCase();
+        return nombreCarrera.includes(filtroLowerCase)
+      });
+    } else {
+      this.filteredCarreras = this.carreras;
+    }
   }
 
   getDepartamentos() {
@@ -37,7 +45,7 @@ export class CarrerasTableComponent implements OnInit,OnChanges {
 
   getCarreras() {
     this._materialService.getCarreras().subscribe({
-      next: (response) => { this.carreras = response },
+      next: (response) => { this.carreras = response; this.filteredCarreras=response },
       error: () => this._alertService.error('Respuesta fallida')
     })
   }

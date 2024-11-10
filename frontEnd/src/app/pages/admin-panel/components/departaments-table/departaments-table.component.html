@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let depto of departaments | paginate: { itemsPerPage: 7, currentPage: pagina }">
+    <tr *ngFor="let depto of filteredDepartaments| paginate: { itemsPerPage: 7, currentPage: pagina }">
       <td>{{ depto.id }}</td>
       <td>{{ depto.nombre }}</td>
       <td>

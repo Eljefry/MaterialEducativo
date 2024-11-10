@@ -9,7 +9,7 @@ export class TopbarComponent {
 
   @Output() filterChanged = new EventEmitter<string>();
   @Input() table: string = '';
-  nameAndEmail:string=''
+  filtro:string=''
 
   filterState(state: string) {
     this.filterChanged.emit(state);

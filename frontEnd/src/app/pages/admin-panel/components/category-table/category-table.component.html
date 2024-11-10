@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let categoria of categories | paginate: { itemsPerPage: 7, currentPage: pagina }">
+    <tr *ngFor="let categoria of filteredCategories| paginate: { itemsPerPage: 7, currentPage: pagina }">
       <td>{{ categoria.id }}</td>
       <td>{{ categoria.nombre }}</td>
       <td>
